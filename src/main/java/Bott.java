@@ -40,10 +40,13 @@ public class Bott {
                 setTaskStatus(tasks, input, true);
             } else if (input.startsWith("unmark ")) {
                 setTaskStatus(tasks, input, false);
-            } else {
-                tasks[taskCount] = new Task(input);
-                taskCount++;
-                printMessage("added: " + input);
+            } else if (input.startsWith("todo ")) {
+                Task todo = new Todo(input.substring("todo ".length()));
+                taskCount = addTask(tasks, taskCount, todo);
+            } else if (input.startsWith("deadline ")) {
+                taskCount = addTask(tasks, taskCount, parseDeadline(input));
+            } else if (input.startsWith("event ")) {
+                taskCount = addTask(tasks, taskCount, parseEvent(input));
             }
             input = scanner.nextLine();
         }
@@ -66,6 +69,51 @@ public class Bott {
             lines[i + 1] = (i + 1) + "." + tasks[i];
         }
         return lines;
+    }
+
+    /**
+     * Stores a newly created task and prints Bott's acknowledgement.
+     *
+     * @param tasks Tasks stored so far.
+     * @param taskCount Number of tasks currently held in {@code tasks}.
+     * @param task Newly created task to store.
+     * @return Task count after {@code task} has been stored.
+     */
+    private static int addTask(Task[] tasks, int taskCount, Task task) {
+        tasks[taskCount] = task;
+        taskCount++;
+        printMessage(
+                "Got it. I've added this task:",
+                "  " + task,
+                "Now you have " + taskCount + " tasks in the list.");
+        return taskCount;
+    }
+
+    /**
+     * Parses a "deadline" command of the form
+     * "deadline {@code <description>} /by {@code <by>}".
+     *
+     * @param command Full command entered by the user.
+     * @return Deadline task described by {@code command}.
+     */
+    private static Deadline parseDeadline(String command) {
+        String remainder = command.substring("deadline ".length());
+        String[] parts = remainder.split(" /by ", 2);
+        return new Deadline(parts[0], parts[1]);
+    }
+
+    /**
+     * Parses an "event" command of the form
+     * "event {@code <description>} /from {@code <from>} /to {@code <to>}".
+     *
+     * @param command Full command entered by the user.
+     * @return Event task described by {@code command}.
+     */
+    private static Event parseEvent(String command) {
+        String remainder = command.substring("event ".length());
+        String[] descriptionAndTimes = remainder.split(" /from ", 2);
+        String[] times = descriptionAndTimes[1].split(" /to ", 2);
+        return new Event(descriptionAndTimes[0], times[0], times[1]);
     }
 
     /**
