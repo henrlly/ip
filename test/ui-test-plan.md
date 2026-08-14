@@ -299,3 +299,89 @@ bye
     ____________________________________________________________
 
 ```
+
+### TC7 — Empty todo description and unknown command
+
+**Aim:** The two minimal required errors: `todo` with no description, and a command Bott doesn't
+recognize, each produce a specific "OOPS!!!" message rather than crashing or being silently ignored.
+
+**Input:**
+```
+todo
+blah
+bye
+```
+
+**Expected output:**
+```
+    ____________________________________________________________
+ ____     ___     _____   _____ 
+|  _ \   / _ \   |_   _| |_   _|
+| |_) | | | | |    | |     | |  
+|  _ <  | | | |    | |     | |  
+| |_) | | |_| |    | |     | |  
+|____/   \___/     |_|     |_|  
+    ____________________________________________________________
+     Hello! I'm Bott.
+     What can I do for you?
+    ____________________________________________________________
+
+    ____________________________________________________________
+     OOPS!!! A todo needs a description. Try: todo <description>
+    ____________________________________________________________
+
+    ____________________________________________________________
+     OOPS!!! I don't recognize "blah" as a command. Try: list, todo, deadline, event, mark, unmark, or bye.
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Bye. Hope to see you again soon!
+    ____________________________________________________________
+
+```
+
+### TC8 — Task-number and deadline/event syntax errors, then recovery
+
+**Aim:** `mark`/`unmark` on a task number that doesn't exist, a `deadline` missing its `/by` marker, and
+an `event` missing its `/to` marker each get a specific, actionable error message, and a bad command
+doesn't corrupt state or stop later valid commands from working.
+
+**Input:**
+```
+mark 1
+deadline foo
+event foo /from Mon
+bye
+```
+
+**Expected output:**
+```
+    ____________________________________________________________
+ ____     ___     _____   _____ 
+|  _ \   / _ \   |_   _| |_   _|
+| |_) | | | | |    | |     | |  
+|  _ <  | | | |    | |     | |  
+| |_) | | |_| |    | |     | |  
+|____/   \___/     |_|     |_|  
+    ____________________________________________________________
+     Hello! I'm Bott.
+     What can I do for you?
+    ____________________________________________________________
+
+    ____________________________________________________________
+     OOPS!!! There is no task number 1 in your list. You currently have 0 task(s).
+    ____________________________________________________________
+
+    ____________________________________________________________
+     OOPS!!! A deadline needs a "/by" date/time. Try: deadline <description> /by <date/time>
+    ____________________________________________________________
+
+    ____________________________________________________________
+     OOPS!!! An event needs a "/to" end time after its "/from" start time. Try: event <description> /from <start> /to <end>
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Bye. Hope to see you again soon!
+    ____________________________________________________________
+
+```

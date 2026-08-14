@@ -34,24 +34,57 @@ public class Bott {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         while (!input.equals("bye")) {
-            if (input.equals("list")) {
-                printMessage(buildTaskListMessage(tasks, taskCount));
-            } else if (input.startsWith("mark ")) {
-                setTaskStatus(tasks, input, true);
-            } else if (input.startsWith("unmark ")) {
-                setTaskStatus(tasks, input, false);
-            } else if (input.startsWith("todo ")) {
-                Task todo = new Todo(input.substring("todo ".length()));
-                taskCount = addTask(tasks, taskCount, todo);
-            } else if (input.startsWith("deadline ")) {
-                taskCount = addTask(tasks, taskCount, parseDeadline(input));
-            } else if (input.startsWith("event ")) {
-                taskCount = addTask(tasks, taskCount, parseEvent(input));
+            try {
+                taskCount = executeCommand(input, tasks, taskCount);
+            } catch (BottException exception) {
+                printMessage("OOPS!!! " + exception.getMessage());
             }
             input = scanner.nextLine();
         }
         printMessage("Bye. Hope to see you again soon!");
         scanner.close();
+    }
+
+    /**
+     * Executes a single command entered by the user, other than "bye"
+     * (which the caller handles by ending the input loop).
+     *
+     * @param input Command entered by the user.
+     * @param tasks Tasks stored so far.
+     * @param taskCount Number of tasks currently held in {@code tasks}.
+     * @return Task count after executing {@code input}.
+     * @throws BottException If {@code input} is not a recognized command,
+     *         or is missing information the command needs.
+     */
+    private static int executeCommand(String input, Task[] tasks, int taskCount) throws BottException {
+        String[] commandAndArgs = input.split(" ", 2);
+        String command = commandAndArgs[0];
+        String args = commandAndArgs.length > 1 ? commandAndArgs[1] : "";
+
+        switch (command) {
+        case "list":
+            printMessage(buildTaskListMessage(tasks, taskCount));
+            break;
+        case "mark":
+            setTaskStatus(tasks, taskCount, "mark", args, true);
+            break;
+        case "unmark":
+            setTaskStatus(tasks, taskCount, "unmark", args, false);
+            break;
+        case "todo":
+            taskCount = addTask(tasks, taskCount, parseTodo(args));
+            break;
+        case "deadline":
+            taskCount = addTask(tasks, taskCount, parseDeadline(args));
+            break;
+        case "event":
+            taskCount = addTask(tasks, taskCount, parseEvent(args));
+            break;
+        default:
+            throw new BottException("I don't recognize \"" + command
+                    + "\" as a command. Try: list, todo, deadline, event, mark, unmark, or bye.");
+        }
+        return taskCount;
     }
 
     /**
@@ -90,42 +123,114 @@ public class Bott {
     }
 
     /**
-     * Parses a "deadline" command of the form
-     * "deadline {@code <description>} /by {@code <by>}".
+     * Parses the arguments of a "todo" command.
      *
-     * @param command Full command entered by the user.
-     * @return Deadline task described by {@code command}.
+     * @param args Text after the "todo" command word.
+     * @return Todo task described by {@code args}.
+     * @throws BottException If {@code args} has no description.
      */
-    private static Deadline parseDeadline(String command) {
-        String remainder = command.substring("deadline ".length());
-        String[] parts = remainder.split(" /by ", 2);
-        return new Deadline(parts[0], parts[1]);
+    private static Todo parseTodo(String args) throws BottException {
+        if (args.isBlank()) {
+            throw new BottException("A todo needs a description. Try: todo <description>");
+        }
+        return new Todo(args);
     }
 
     /**
-     * Parses an "event" command of the form
-     * "event {@code <description>} /from {@code <from>} /to {@code <to>}".
+     * Parses the arguments of a "deadline" command, of the form
+     * "{@code <description>} /by {@code <by>}".
      *
-     * @param command Full command entered by the user.
-     * @return Event task described by {@code command}.
+     * @param args Text after the "deadline" command word.
+     * @return Deadline task described by {@code args}.
+     * @throws BottException If {@code args} is missing a description, the
+     *         "/by" marker, or the date/time after it.
      */
-    private static Event parseEvent(String command) {
-        String remainder = command.substring("event ".length());
-        String[] descriptionAndTimes = remainder.split(" /from ", 2);
-        String[] times = descriptionAndTimes[1].split(" /to ", 2);
-        return new Event(descriptionAndTimes[0], times[0], times[1]);
+    private static Deadline parseDeadline(String args) throws BottException {
+        if (args.isBlank()) {
+            throw new BottException(
+                    "A deadline needs a description. Try: deadline <description> /by <date/time>");
+        }
+        int byIndex = args.indexOf("/by");
+        if (byIndex == -1) {
+            throw new BottException(
+                    "A deadline needs a \"/by\" date/time. Try: deadline <description> /by <date/time>");
+        }
+        String description = args.substring(0, byIndex).trim();
+        String by = args.substring(byIndex + "/by".length()).trim();
+        if (description.isEmpty()) {
+            throw new BottException(
+                    "A deadline needs a description. Try: deadline <description> /by <date/time>");
+        }
+        if (by.isEmpty()) {
+            throw new BottException(
+                    "The \"by\" date/time of a deadline cannot be empty. "
+                            + "Try: deadline <description> /by <date/time>");
+        }
+        return new Deadline(description, by);
     }
 
     /**
-     * Marks or unmarks the task named in a "mark"/"unmark" command and
-     * prints Bott's response.
+     * Parses the arguments of an "event" command, of the form
+     * "{@code <description>} /from {@code <from>} /to {@code <to>}".
+     *
+     * @param args Text after the "event" command word.
+     * @return Event task described by {@code args}.
+     * @throws BottException If {@code args} is missing a description, the
+     *         "/from" or "/to" markers, or either date/time.
+     */
+    private static Event parseEvent(String args) throws BottException {
+        if (args.isBlank()) {
+            throw new BottException(
+                    "An event needs a description. Try: event <description> /from <start> /to <end>");
+        }
+        int fromIndex = args.indexOf("/from");
+        if (fromIndex == -1) {
+            throw new BottException(
+                    "An event needs a \"/from\" start time. "
+                            + "Try: event <description> /from <start> /to <end>");
+        }
+        int toIndex = args.indexOf("/to", fromIndex);
+        if (toIndex == -1) {
+            throw new BottException(
+                    "An event needs a \"/to\" end time after its \"/from\" start time. "
+                            + "Try: event <description> /from <start> /to <end>");
+        }
+        String description = args.substring(0, fromIndex).trim();
+        String from = args.substring(fromIndex + "/from".length(), toIndex).trim();
+        String to = args.substring(toIndex + "/to".length()).trim();
+        if (description.isEmpty()) {
+            throw new BottException(
+                    "An event needs a description. Try: event <description> /from <start> /to <end>");
+        }
+        if (from.isEmpty()) {
+            throw new BottException(
+                    "The \"from\" start time of an event cannot be empty. "
+                            + "Try: event <description> /from <start> /to <end>");
+        }
+        if (to.isEmpty()) {
+            throw new BottException(
+                    "The \"to\" end time of an event cannot be empty. "
+                            + "Try: event <description> /from <start> /to <end>");
+        }
+        return new Event(description, from, to);
+    }
+
+    /**
+     * Marks or unmarks the task named in a "mark"/"unmark" command's
+     * arguments and prints Bott's response.
      *
      * @param tasks Tasks stored so far.
-     * @param command Full command entered by the user, e.g. "mark 2".
+     * @param taskCount Number of tasks currently held in {@code tasks}.
+     * @param commandName Command word the user typed, "mark" or "unmark",
+     *         used to phrase error messages.
+     * @param args Text after the command word.
      * @param isDone Whether the task should be marked as done.
+     * @throws BottException If {@code args} does not name an existing task.
      */
-    private static void setTaskStatus(Task[] tasks, String command, boolean isDone) {
-        int taskNumber = Integer.parseInt(command.substring(command.indexOf(' ') + 1));
+    private static void setTaskStatus(
+            Task[] tasks, int taskCount, String commandName, String args, boolean isDone)
+            throws BottException {
+        int taskNumber = parseTaskNumber(commandName, args, taskCount);
         Task task = tasks[taskNumber - 1];
         if (isDone) {
             task.markAsDone();
@@ -134,6 +239,38 @@ public class Bott {
             task.markAsNotDone();
             printMessage("OK, I've marked this task as not done yet:", "  " + task);
         }
+    }
+
+    /**
+     * Parses and validates the task number argument of a "mark"/"unmark"
+     * command.
+     *
+     * @param commandName Command word the user typed, "mark" or "unmark",
+     *         used to phrase error messages.
+     * @param args Text after the command word.
+     * @param taskCount Number of tasks currently stored.
+     * @return Task number in {@code args}, as a 1-based index.
+     * @throws BottException If {@code args} is missing, not a number, or
+     *         does not name an existing task.
+     */
+    private static int parseTaskNumber(String commandName, String args, int taskCount) throws BottException {
+        if (args.isBlank()) {
+            throw new BottException("Please specify a task number. Try: " + commandName + " <task number>");
+        }
+        int taskNumber;
+        try {
+            taskNumber = Integer.parseInt(args.trim());
+        } catch (NumberFormatException exception) {
+            throw new BottException(
+                    "\"" + args.trim() + "\" is not a valid task number. "
+                            + "Try: " + commandName + " <task number>");
+        }
+        if (taskNumber < 1 || taskNumber > taskCount) {
+            throw new BottException(
+                    "There is no task number " + taskNumber + " in your list. You currently have "
+                            + taskCount + " task(s).");
+        }
+        return taskNumber;
     }
 
     /**
