@@ -33,3 +33,13 @@ Ensure that Java 25 is used when running the application or build tasks. On macO
 Use lightweight tags unless the user requests an annotated tag.
 When proposing or creating a commit message, include enough detail to explain the rationale for the change.
 Do not commit or push unless explicitly asked.
+
+## Testing workflow
+
+After making any code change (e.g. to `Bott.java` or any `Task` subclass):
+
+1. Update `test/ui-test-plan.md` if the change affects Bott's commands or console output — add or revise
+   test cases so the plan's expected output reflects the new intended behavior.
+2. Invoke the `test-ui` skill to compile the program and check its actual output against the test plan.
+
+Do this even if the user didn't explicitly ask for testing.
