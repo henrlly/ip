@@ -28,16 +28,20 @@ public class Bott {
         System.out.print(banner);
         printMessage("Hello! I'm Bott.", "What can I do for you?");
 
-        String[] tasks = new String[MAX_TASKS];
+        Task[] tasks = new Task[MAX_TASKS];
         int taskCount = 0;
 
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         while (!input.equals("bye")) {
             if (input.equals("list")) {
-                printMessage(formatTaskList(tasks, taskCount));
+                printMessage(buildTaskListMessage(tasks, taskCount));
+            } else if (input.startsWith("mark ")) {
+                setTaskStatus(tasks, input, true);
+            } else if (input.startsWith("unmark ")) {
+                setTaskStatus(tasks, input, false);
             } else {
-                tasks[taskCount] = input;
+                tasks[taskCount] = new Task(input);
                 taskCount++;
                 printMessage("added: " + input);
             }
@@ -48,18 +52,40 @@ public class Bott {
     }
 
     /**
-     * Builds the numbered lines describing the tasks stored so far.
+     * Builds the full "list" response: a header line followed by one
+     * numbered line for each task stored so far.
      *
      * @param tasks Tasks stored so far.
      * @param taskCount Number of tasks currently held in {@code tasks}.
-     * @return Lines of the form "{@code index. task}", one per stored task.
+     * @return Lines to print for the "list" command.
      */
-    private static String[] formatTaskList(String[] tasks, int taskCount) {
-        String[] lines = new String[taskCount];
+    private static String[] buildTaskListMessage(Task[] tasks, int taskCount) {
+        String[] lines = new String[taskCount + 1];
+        lines[0] = "Here are the tasks in your list:";
         for (int i = 0; i < taskCount; i++) {
-            lines[i] = (i + 1) + ". " + tasks[i];
+            lines[i + 1] = (i + 1) + "." + tasks[i];
         }
         return lines;
+    }
+
+    /**
+     * Marks or unmarks the task named in a "mark"/"unmark" command and
+     * prints Bott's response.
+     *
+     * @param tasks Tasks stored so far.
+     * @param command Full command entered by the user, e.g. "mark 2".
+     * @param isDone Whether the task should be marked as done.
+     */
+    private static void setTaskStatus(Task[] tasks, String command, boolean isDone) {
+        int taskNumber = Integer.parseInt(command.substring(command.indexOf(' ') + 1));
+        Task task = tasks[taskNumber - 1];
+        if (isDone) {
+            task.markAsDone();
+            printMessage("Nice! I've marked this task as done:", "  " + task);
+        } else {
+            task.markAsNotDone();
+            printMessage("OK, I've marked this task as not done yet:", "  " + task);
+        }
     }
 
     /**
