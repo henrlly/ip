@@ -1,12 +1,11 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
  * The main entry point for the Bott chatbot.
  */
 public class Bott {
-
-    /** Maximum number of tasks Bott can remember in a single session. */
-    private static final int MAX_TASKS = 100;
 
     /** Indent shared by the horizontal divider and every line of message text. */
     private static final String INDENT = "    ";
@@ -28,14 +27,13 @@ public class Bott {
         System.out.print(banner);
         printMessage("Hello! I'm Bott.", "What can I do for you?");
 
-        Task[] tasks = new Task[MAX_TASKS];
-        int taskCount = 0;
+        List<Task> tasks = new ArrayList<>();
 
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         while (!input.equals("bye")) {
             try {
-                taskCount = executeCommand(input, tasks, taskCount);
+                executeCommand(input, tasks);
             } catch (BottException exception) {
                 printMessage("OOPS!!! " + exception.getMessage());
             }
@@ -51,40 +49,40 @@ public class Bott {
      *
      * @param input Command entered by the user.
      * @param tasks Tasks stored so far.
-     * @param taskCount Number of tasks currently held in {@code tasks}.
-     * @return Task count after executing {@code input}.
      * @throws BottException If {@code input} is not a recognized command,
      *         or is missing information the command needs.
      */
-    private static int executeCommand(String input, Task[] tasks, int taskCount) throws BottException {
+    private static void executeCommand(String input, List<Task> tasks) throws BottException {
         String[] commandAndArgs = input.split(" ", 2);
         String command = commandAndArgs[0];
         String args = commandAndArgs.length > 1 ? commandAndArgs[1] : "";
 
         switch (command) {
         case "list":
-            printMessage(buildTaskListMessage(tasks, taskCount));
+            printMessage(buildTaskListMessage(tasks));
             break;
         case "mark":
-            setTaskStatus(tasks, taskCount, "mark", args, true);
+            setTaskStatus(tasks, "mark", args, true);
             break;
         case "unmark":
-            setTaskStatus(tasks, taskCount, "unmark", args, false);
+            setTaskStatus(tasks, "unmark", args, false);
+            break;
+        case "delete":
+            deleteTask(tasks, args);
             break;
         case "todo":
-            taskCount = addTask(tasks, taskCount, parseTodo(args));
+            addTask(tasks, parseTodo(args));
             break;
         case "deadline":
-            taskCount = addTask(tasks, taskCount, parseDeadline(args));
+            addTask(tasks, parseDeadline(args));
             break;
         case "event":
-            taskCount = addTask(tasks, taskCount, parseEvent(args));
+            addTask(tasks, parseEvent(args));
             break;
         default:
             throw new BottException("I don't recognize \"" + command
-                    + "\" as a command. Try: list, todo, deadline, event, mark, unmark, or bye.");
+                    + "\" as a command. Try: list, todo, deadline, event, mark, unmark, delete, or bye.");
         }
-        return taskCount;
     }
 
     /**
@@ -92,14 +90,13 @@ public class Bott {
      * numbered line for each task stored so far.
      *
      * @param tasks Tasks stored so far.
-     * @param taskCount Number of tasks currently held in {@code tasks}.
      * @return Lines to print for the "list" command.
      */
-    private static String[] buildTaskListMessage(Task[] tasks, int taskCount) {
-        String[] lines = new String[taskCount + 1];
+    private static String[] buildTaskListMessage(List<Task> tasks) {
+        String[] lines = new String[tasks.size() + 1];
         lines[0] = "Here are the tasks in your list:";
-        for (int i = 0; i < taskCount; i++) {
-            lines[i + 1] = (i + 1) + "." + tasks[i];
+        for (int i = 0; i < tasks.size(); i++) {
+            lines[i + 1] = (i + 1) + "." + tasks.get(i);
         }
         return lines;
     }
@@ -108,18 +105,31 @@ public class Bott {
      * Stores a newly created task and prints Bott's acknowledgement.
      *
      * @param tasks Tasks stored so far.
-     * @param taskCount Number of tasks currently held in {@code tasks}.
      * @param task Newly created task to store.
-     * @return Task count after {@code task} has been stored.
      */
-    private static int addTask(Task[] tasks, int taskCount, Task task) {
-        tasks[taskCount] = task;
-        taskCount++;
+    private static void addTask(List<Task> tasks, Task task) {
+        tasks.add(task);
         printMessage(
                 "Got it. I've added this task:",
                 "  " + task,
-                "Now you have " + taskCount + " tasks in the list.");
-        return taskCount;
+                "Now you have " + tasks.size() + " tasks in the list.");
+    }
+
+    /**
+     * Removes the task named in a "delete" command's arguments and prints
+     * Bott's acknowledgement.
+     *
+     * @param tasks Tasks stored so far.
+     * @param args Text after the "delete" command word.
+     * @throws BottException If {@code args} does not name an existing task.
+     */
+    private static void deleteTask(List<Task> tasks, String args) throws BottException {
+        int taskNumber = parseTaskNumber("delete", args, tasks.size());
+        Task removedTask = tasks.remove(taskNumber - 1);
+        printMessage(
+                "Noted. I've removed this task:",
+                "  " + removedTask,
+                "Now you have " + tasks.size() + " tasks in the list.");
     }
 
     /**
@@ -220,18 +230,16 @@ public class Bott {
      * arguments and prints Bott's response.
      *
      * @param tasks Tasks stored so far.
-     * @param taskCount Number of tasks currently held in {@code tasks}.
      * @param commandName Command word the user typed, "mark" or "unmark",
      *         used to phrase error messages.
      * @param args Text after the command word.
      * @param isDone Whether the task should be marked as done.
      * @throws BottException If {@code args} does not name an existing task.
      */
-    private static void setTaskStatus(
-            Task[] tasks, int taskCount, String commandName, String args, boolean isDone)
+    private static void setTaskStatus(List<Task> tasks, String commandName, String args, boolean isDone)
             throws BottException {
-        int taskNumber = parseTaskNumber(commandName, args, taskCount);
-        Task task = tasks[taskNumber - 1];
+        int taskNumber = parseTaskNumber(commandName, args, tasks.size());
+        Task task = tasks.get(taskNumber - 1);
         if (isDone) {
             task.markAsDone();
             printMessage("Nice! I've marked this task as done:", "  " + task);
@@ -242,11 +250,11 @@ public class Bott {
     }
 
     /**
-     * Parses and validates the task number argument of a "mark"/"unmark"
-     * command.
+     * Parses and validates the task number argument of a "mark"/"unmark"/
+     * "delete" command.
      *
-     * @param commandName Command word the user typed, "mark" or "unmark",
-     *         used to phrase error messages.
+     * @param commandName Command word the user typed, used to phrase error
+     *         messages.
      * @param args Text after the command word.
      * @param taskCount Number of tasks currently stored.
      * @return Task number in {@code args}, as a 1-based index.
