@@ -5,6 +5,9 @@ import java.util.Scanner;
  */
 public class Bott {
 
+    /** Maximum number of tasks Bott can remember in a single session. */
+    private static final int MAX_TASKS = 100;
+
     /** Indent shared by the horizontal divider and every line of message text. */
     private static final String INDENT = "    ";
 
@@ -25,14 +28,38 @@ public class Bott {
         System.out.print(banner);
         printMessage("Hello! I'm Bott.", "What can I do for you?");
 
+        String[] tasks = new String[MAX_TASKS];
+        int taskCount = 0;
+
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         while (!input.equals("bye")) {
-            printMessage(input);
+            if (input.equals("list")) {
+                printMessage(formatTaskList(tasks, taskCount));
+            } else {
+                tasks[taskCount] = input;
+                taskCount++;
+                printMessage("added: " + input);
+            }
             input = scanner.nextLine();
         }
         printMessage("Bye. Hope to see you again soon!");
         scanner.close();
+    }
+
+    /**
+     * Builds the numbered lines describing the tasks stored so far.
+     *
+     * @param tasks Tasks stored so far.
+     * @param taskCount Number of tasks currently held in {@code tasks}.
+     * @return Lines of the form "{@code index. task}", one per stored task.
+     */
+    private static String[] formatTaskList(String[] tasks, int taskCount) {
+        String[] lines = new String[taskCount];
+        for (int i = 0; i < taskCount; i++) {
+            lines[i] = (i + 1) + ". " + tasks[i];
+        }
+        return lines;
     }
 
     /**
