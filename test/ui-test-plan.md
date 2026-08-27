@@ -8,6 +8,8 @@ character for character (including whitespace, indentation, and blank lines).
 Each test case is a single, independent run of the program: its Input lines are sent to one fresh
 invocation of `Bott`, in order, ending with `bye`. Expected output is the *entire* console output for
 that run, from the first line of the startup banner to the final blank line after the farewell message.
+The exception is TC11, which spans two runs to check that tasks saved to `data/bott.txt` are reloaded on
+the next run — see its Aim for details.
 
 See `AGENTS.md` for when this plan and the `test-ui` skill should be updated/run.
 
@@ -549,6 +551,89 @@ bye
 
     ____________________________________________________________
      OOPS!!! There is no task number 1 in your list. You currently have 0 task(s).
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Bye. Hope to see you again soon!
+    ____________________________________________________________
+
+```
+
+### TC11 — Tasks persist across restarts
+
+**Aim:** Tasks saved to `data/bott.txt` during one run of the program, including their done/not-done
+status, are reloaded the next time the program starts. Unlike the other test cases, this one is two
+separate runs of the program that share the same `data/bott.txt` (do not delete it between the two runs).
+
+**Run A — Input:**
+```
+todo read book
+deadline return book /by June 6th
+mark 1
+bye
+```
+
+**Run A — Expected output:**
+```
+    ____________________________________________________________
+ ____     ___     _____   _____ 
+|  _ \   / _ \   |_   _| |_   _|
+| |_) | | | | |    | |     | |  
+|  _ <  | | | |    | |     | |  
+| |_) | | |_| |    | |     | |  
+|____/   \___/     |_|     |_|  
+    ____________________________________________________________
+     Hello! I'm Bott.
+     What can I do for you?
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Got it. I've added this task:
+       [T][ ] read book
+     Now you have 1 tasks in the list.
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Got it. I've added this task:
+       [D][ ] return book (by: June 6th)
+     Now you have 2 tasks in the list.
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Nice! I've marked this task as done:
+       [T][X] read book
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Bye. Hope to see you again soon!
+    ____________________________________________________________
+
+```
+
+**Run B — Input:**
+```
+list
+bye
+```
+
+**Run B — Expected output:**
+```
+    ____________________________________________________________
+ ____     ___     _____   _____ 
+|  _ \   / _ \   |_   _| |_   _|
+| |_) | | | | |    | |     | |  
+|  _ <  | | | |    | |     | |  
+| |_) | | |_| |    | |     | |  
+|____/   \___/     |_|     |_|  
+    ____________________________________________________________
+     Hello! I'm Bott.
+     What can I do for you?
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Here are the tasks in your list:
+     1.[T][X] read book
+     2.[D][ ] return book (by: June 6th)
     ____________________________________________________________
 
     ____________________________________________________________
