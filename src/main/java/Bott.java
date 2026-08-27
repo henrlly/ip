@@ -1,14 +1,7 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * The main entry point for the Bott chatbot.
@@ -18,15 +11,19 @@ public class Bott {
     private static final String SAVED_TASKS_FILE_PATH = "./data/bott.txt";
 
     private final Ui ui;
+    private final Storage storage;
     private final List<Task> tasks;
 
     /**
      * Creates a new Bott instance, loading any tasks previously saved to
-     * {@link #SAVED_TASKS_FILE_PATH}.
+     * {@code filePath}.
+     *
+     * @param filePath Path of the file tasks are loaded from and saved to.
      */
-    public Bott() {
+    public Bott(String filePath) {
         ui = new Ui();
-        tasks = loadTasks();
+        storage = new Storage(filePath);
+        tasks = storage.load();
     }
 
     /** Runs Bott's read-execute loop until the user types "bye". */
@@ -45,81 +42,7 @@ public class Bott {
     }
 
     public static void main(String[] args) {
-        new Bott().run();
-    }
-
-    /**
-     * Loads previously saved tasks from {@link #SAVED_TASKS_FILE_PATH}.
-     *
-     * @return Tasks read from the save file, or an empty list if the file
-     *         does not exist yet.
-     */
-    private static List<Task> loadTasks() {
-        List<Task> tasks = new ArrayList<>();
-        try {
-            Scanner fileScanner = new Scanner(new File(SAVED_TASKS_FILE_PATH));
-            while (fileScanner.hasNextLine()) {
-                Task task = parseSavedTask(fileScanner.nextLine());
-                if (task != null) {
-                    tasks.add(task);
-                }
-            }
-            fileScanner.close();
-        } catch (FileNotFoundException exception) {
-            // No save file yet - start with an empty task list.
-        }
-        return tasks;
-    }
-
-    /**
-     * Parses one line of the save file into a task. Expected formats:
-     * "T | 1 | desc", "D | 1 | desc | by", and "E | 1 | desc | from | to",
-     * where the second field is "1" if the task is done, or "0" otherwise.
-     *
-     * @param line Line read from the save file.
-     * @return Task described by {@code line}, or {@code null} if the line
-     *         is corrupted and should be skipped.
-     */
-    private static Task parseSavedTask(String line) {
-        String[] fields = line.split(" \\| ");
-        try {
-            Task task;
-            switch (fields[0]) {
-            case "T":
-                task = new Todo(fields[2]);
-                break;
-            case "D":
-                task = new Deadline(fields[2], LocalDate.parse(fields[3]));
-                break;
-            case "E":
-                task = new Event(fields[2], LocalDate.parse(fields[3]), LocalDate.parse(fields[4]));
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown task type: " + fields[0]);
-            }
-            if (fields[1].equals("1")) {
-                task.markAsDone();
-            }
-            return task;
-        } catch (RuntimeException exception) {
-            System.out.println("Skipping corrupted save file line: " + line);
-            return null;
-        }
-    }
-
-    /** Overwrites the save file with the current tasks. */
-    private void saveTasks() {
-        File file = new File(SAVED_TASKS_FILE_PATH);
-        file.getParentFile().mkdirs();
-        try {
-            FileWriter writer = new FileWriter(file);
-            for (Task task : tasks) {
-                writer.write(task.toFileFormat() + System.lineSeparator());
-            }
-            writer.close();
-        } catch (IOException exception) {
-            ui.showError("Could not save tasks: " + exception.getMessage());
-        }
+        new Bott(SAVED_TASKS_FILE_PATH).run();
     }
 
     /**
@@ -168,10 +91,11 @@ public class Bott {
      * Stores a newly created task and prints Bott's acknowledgement.
      *
      * @param task Newly created task to store.
+     * @throws BottException If the updated task list cannot be saved.
      */
-    private void addTask(Task task) {
+    private void addTask(Task task) throws BottException {
         tasks.add(task);
-        saveTasks();
+        storage.save(tasks);
         ui.showTaskAdded(task, tasks.size());
     }
 
@@ -180,12 +104,13 @@ public class Bott {
      * Bott's acknowledgement.
      *
      * @param args Text after the "delete" command word.
-     * @throws BottException If {@code args} does not name an existing task.
+     * @throws BottException If {@code args} does not name an existing task,
+     *         or the updated task list cannot be saved.
      */
     private void deleteTask(String args) throws BottException {
         int taskNumber = parseTaskNumber("delete", args, tasks.size());
         Task removedTask = tasks.remove(taskNumber - 1);
-        saveTasks();
+        storage.save(tasks);
         ui.showTaskDeleted(removedTask, tasks.size());
     }
 
@@ -309,7 +234,8 @@ public class Bott {
      *         used to phrase error messages.
      * @param args Text after the command word.
      * @param isDone Whether the task should be marked as done.
-     * @throws BottException If {@code args} does not name an existing task.
+     * @throws BottException If {@code args} does not name an existing task,
+     *         or the updated task list cannot be saved.
      */
     private void setTaskStatus(String commandName, String args, boolean isDone) throws BottException {
         int taskNumber = parseTaskNumber(commandName, args, tasks.size());
@@ -321,7 +247,7 @@ public class Bott {
             task.markAsNotDone();
             ui.showTaskUnmarked(task);
         }
-        saveTasks();
+        storage.save(tasks);
     }
 
     /**
