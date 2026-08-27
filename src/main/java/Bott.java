@@ -3,6 +3,9 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -62,10 +65,10 @@ public class Bott {
                 task = new Todo(fields[2]);
                 break;
             case "D":
-                task = new Deadline(fields[2], fields[3]);
+                task = new Deadline(fields[2], LocalDate.parse(fields[3]));
                 break;
             case "E":
-                task = new Event(fields[2], fields[3], fields[4]);
+                task = new Event(fields[2], LocalDate.parse(fields[3]), LocalDate.parse(fields[4]));
                 break;
             default:
                 throw new IllegalArgumentException("Unknown task type: " + fields[0]);
@@ -249,34 +252,34 @@ public class Bott {
      * @param args Text after the "deadline" command word.
      * @return Deadline task described by {@code args}.
      * @throws BottException If {@code args} is missing a description, the
-     *         "/by" marker, or the date/time after it.
+     *         "/by" marker, or a valid date after it.
      */
     private static Deadline parseDeadline(String args) throws BottException {
         if (args.isBlank()) {
             throw new BottException(
-                "A deadline needs a description. Try: deadline <description> /by <date/time>"
+                "A deadline needs a description. Try: deadline <description> /by <yyyy-MM-dd>"
             );
         }
         int byIndex = args.indexOf("/by");
         if (byIndex == -1) {
             throw new BottException(
-                "A deadline needs a \"/by\" date/time. Try: deadline <description> /by <date/time>"
+                "A deadline needs a \"/by\" date. Try: deadline <description> /by <yyyy-MM-dd>"
             );
         }
         String description = args.substring(0, byIndex).trim();
         String by = args.substring(byIndex + "/by".length()).trim();
         if (description.isEmpty()) {
             throw new BottException(
-                "A deadline needs a description. Try: deadline <description> /by <date/time>"
+                "A deadline needs a description. Try: deadline <description> /by <yyyy-MM-dd>"
             );
         }
         if (by.isEmpty()) {
             throw new BottException(
-                "The \"by\" date/time of a deadline cannot be empty. " +
-                    "Try: deadline <description> /by <date/time>"
+                "The \"by\" date of a deadline cannot be empty. " +
+                    "Try: deadline <description> /by <yyyy-MM-dd>"
             );
         }
-        return new Deadline(description, by);
+        return new Deadline(description, parseDate("by", by));
     }
 
     /**
@@ -286,26 +289,26 @@ public class Bott {
      * @param args Text after the "event" command word.
      * @return Event task described by {@code args}.
      * @throws BottException If {@code args} is missing a description, the
-     *         "/from" or "/to" markers, or either date/time.
+     *         "/from" or "/to" markers, or either valid date.
      */
     private static Event parseEvent(String args) throws BottException {
         if (args.isBlank()) {
             throw new BottException(
-                "An event needs a description. Try: event <description> /from <start> /to <end>"
+                "An event needs a description. Try: event <description> /from <yyyy-MM-dd> /to <yyyy-MM-dd>"
             );
         }
         int fromIndex = args.indexOf("/from");
         if (fromIndex == -1) {
             throw new BottException(
-                "An event needs a \"/from\" start time. " +
-                    "Try: event <description> /from <start> /to <end>"
+                "An event needs a \"/from\" start date. " +
+                    "Try: event <description> /from <yyyy-MM-dd> /to <yyyy-MM-dd>"
             );
         }
         int toIndex = args.indexOf("/to", fromIndex);
         if (toIndex == -1) {
             throw new BottException(
-                "An event needs a \"/to\" end time after its \"/from\" start time. " +
-                    "Try: event <description> /from <start> /to <end>"
+                "An event needs a \"/to\" end date after its \"/from\" start date. " +
+                    "Try: event <description> /from <yyyy-MM-dd> /to <yyyy-MM-dd>"
             );
         }
         String description = args.substring(0, fromIndex).trim();
@@ -315,22 +318,42 @@ public class Bott {
         String to = args.substring(toIndex + "/to".length()).trim();
         if (description.isEmpty()) {
             throw new BottException(
-                "An event needs a description. Try: event <description> /from <start> /to <end>"
+                "An event needs a description. Try: event <description> /from <yyyy-MM-dd> /to <yyyy-MM-dd>"
             );
         }
         if (from.isEmpty()) {
             throw new BottException(
-                "The \"from\" start time of an event cannot be empty. " +
-                    "Try: event <description> /from <start> /to <end>"
+                "The \"from\" start date of an event cannot be empty. " +
+                    "Try: event <description> /from <yyyy-MM-dd> /to <yyyy-MM-dd>"
             );
         }
         if (to.isEmpty()) {
             throw new BottException(
-                "The \"to\" end time of an event cannot be empty. " +
-                    "Try: event <description> /from <start> /to <end>"
+                "The \"to\" end date of an event cannot be empty. " +
+                    "Try: event <description> /from <yyyy-MM-dd> /to <yyyy-MM-dd>"
             );
         }
-        return new Event(description, from, to);
+        return new Event(description, parseDate("from", from), parseDate("to", to));
+    }
+
+    /**
+     * Parses a date in "yyyy-MM-dd" format.
+     *
+     * @param fieldLabel Name of the field being parsed, used to phrase the error message
+     *         (e.g. "by", "from", "to").
+     * @param value Text to parse as a date.
+     * @return Parsed date.
+     * @throws BottException If {@code value} is not a valid "yyyy-MM-dd" date.
+     */
+    private static LocalDate parseDate(String fieldLabel, String value) throws BottException {
+        try {
+            return LocalDate.parse(value);
+        } catch (DateTimeParseException exception) {
+            throw new BottException(
+                "The \"" + fieldLabel + "\" date must be in yyyy-MM-dd format (e.g. 2019-10-15). \"" +
+                    value + "\" is not a valid date."
+            );
+        }
     }
 
     /**
