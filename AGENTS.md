@@ -38,8 +38,11 @@ the rule most obviously related to the change at hand.
 ## Git
 
 Use lightweight tags unless the user requests an annotated tag.
-When proposing or creating a commit message, include enough detail to explain the rationale for the change.
 Do not commit or push unless explicitly asked.
+
+All commit messages and branch names in this project must follow the `seedu-git-standard` skill
+(`.claude/skills/seedu-git-standard/SKILL.md`), based on the SE-EDU Git conventions. Invoke that skill
+before proposing or creating any commit message, and before naming any new branch.
 
 ## Testing workflow
 
