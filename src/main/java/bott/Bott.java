@@ -44,6 +44,7 @@ public class Bott {
         ui.showGoodbye();
     }
 
+    /** Starts Bott, backed by the save file at {@link #SAVED_TASKS_FILE_PATH}. */
     public static void main(String[] args) {
         new Bott(SAVED_TASKS_FILE_PATH).run();
     }
