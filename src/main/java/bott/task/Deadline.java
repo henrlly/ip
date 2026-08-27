@@ -29,6 +29,10 @@ public class Deadline extends Task {
         return super.toString() + " (by: " + by.format(DISPLAY_DATE_FORMAT) + ")";
     }
 
+    /**
+     * Returns this task's representation for saving to file, e.g.
+     * "D | 0 | return book | 2019-10-15".
+     */
     @Override
     public String toFileFormat() {
         return super.toFileFormat() + " | " + by;

@@ -34,6 +34,10 @@ public class Event extends Task {
                 + " to: " + to.format(DISPLAY_DATE_FORMAT) + ")";
     }
 
+    /**
+     * Returns this task's representation for saving to file, e.g.
+     * "E | 0 | project meeting | 2019-08-06 | 2019-08-07".
+     */
     @Override
     public String toFileFormat() {
         return super.toFileFormat() + " | " + from + " | " + to;
