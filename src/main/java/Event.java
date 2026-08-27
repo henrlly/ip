@@ -1,19 +1,21 @@
+import java.time.LocalDate;
+
 /**
- * Represents a task that starts and ends at specific dates/times.
+ * Represents a task that starts and ends on specific dates.
  */
 public class Event extends Task {
 
-    protected String from;
-    protected String to;
+    protected LocalDate from;
+    protected LocalDate to;
 
     /**
      * Creates a new event task.
      *
      * @param description Description of the task.
-     * @param from Date/time the event starts.
-     * @param to Date/time the event ends.
+     * @param from Date the event starts.
+     * @param to Date the event ends.
      */
-    public Event(String description, String from, String to) {
+    public Event(String description, LocalDate from, LocalDate to) {
         super(description, TaskType.EVENT);
         this.from = from;
         this.to = to;
@@ -21,11 +23,13 @@ public class Event extends Task {
 
     /**
      * Returns this task's textual representation, e.g.
-     * "[E][ ] project meeting (from: Mon 2pm to: 4pm)".
+     * "[E][ ] project meeting (from: Aug 06 2019 to: Aug 07 2019)".
      */
     @Override
     public String toString() {
-        return super.toString() + " (from: " + from + " to: " + to + ")";
+        return super.toString()
+                + " (from: " + from.format(DISPLAY_DATE_FORMAT)
+                + " to: " + to.format(DISPLAY_DATE_FORMAT) + ")";
     }
 
     @Override

@@ -1,28 +1,30 @@
+import java.time.LocalDate;
+
 /**
- * Represents a task that needs to be done before a specific date/time.
+ * Represents a task that needs to be done before a specific date.
  */
 public class Deadline extends Task {
 
-    protected String by;
+    protected LocalDate by;
 
     /**
      * Creates a new deadline task.
      *
      * @param description Description of the task.
-     * @param by Date/time by which the task should be done.
+     * @param by Date by which the task should be done.
      */
-    public Deadline(String description, String by) {
+    public Deadline(String description, LocalDate by) {
         super(description, TaskType.DEADLINE);
         this.by = by;
     }
 
     /**
      * Returns this task's textual representation, e.g.
-     * "[D][ ] return book (by: Sunday)".
+     * "[D][ ] return book (by: Oct 15 2019)".
      */
     @Override
     public String toString() {
-        return super.toString() + " (by: " + by + ")";
+        return super.toString() + " (by: " + by.format(DISPLAY_DATE_FORMAT) + ")";
     }
 
     @Override

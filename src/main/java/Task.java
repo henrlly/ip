@@ -1,7 +1,14 @@
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
 /**
  * Represents a task with a description, a type, and a done/not-done status.
  */
 public class Task {
+
+    /** Format used to display a date to the user, e.g. "Oct 15 2019". */
+    protected static final DateTimeFormatter DISPLAY_DATE_FORMAT =
+            DateTimeFormatter.ofPattern("MMM dd yyyy", Locale.ENGLISH);
 
     protected String description;
     protected boolean isDone;
