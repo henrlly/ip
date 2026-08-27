@@ -1,11 +1,5 @@
 package bott.storage;
 
-import bott.BottException;
-import bott.task.Deadline;
-import bott.task.Event;
-import bott.task.Task;
-import bott.task.Todo;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -16,6 +10,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import bott.BottException;
+import bott.task.Deadline;
+import bott.task.Event;
+import bott.task.Task;
+import bott.task.Todo;
 
 /**
  * Handles loading tasks from, and saving tasks to, a save file on disk.
@@ -90,17 +90,17 @@ public class Storage {
         try {
             Task task;
             switch (fields[0]) {
-            case "T":
-                task = new Todo(fields[2]);
-                break;
-            case "D":
-                task = new Deadline(fields[2], LocalDate.parse(fields[3]));
-                break;
-            case "E":
-                task = new Event(fields[2], LocalDate.parse(fields[3]), LocalDate.parse(fields[4]));
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown task type: " + fields[0]);
+                case "T":
+                    task = new Todo(fields[2]);
+                    break;
+                case "D":
+                    task = new Deadline(fields[2], LocalDate.parse(fields[3]));
+                    break;
+                case "E":
+                    task = new Event(fields[2], LocalDate.parse(fields[3]), LocalDate.parse(fields[4]));
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown task type: " + fields[0]);
             }
             if (fields[1].equals("1")) {
                 task.markAsDone();
