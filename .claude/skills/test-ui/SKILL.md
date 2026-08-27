@@ -11,9 +11,10 @@ the program's console output against each test case's expected output, character
 ## Steps
 
 1. **Compile.** Make sure Java 25 is active (`sdk use java 25.0.3.fx-zulu` if needed), then build a clean
-   set of classes:
+   set of classes. Classes live under packages (e.g. `bott`, `bott.ui`, `bott.task`), so compile with a
+   recursive file list rather than a flat wildcard:
    ```
-   rm -rf bin && mkdir bin && javac -d bin src/main/java/*.java
+   rm -rf bin && mkdir bin && find src/main/java -name "*.java" | xargs javac -d bin
    ```
    If compilation fails, stop here and report the compiler error — do not run tests against a stale or
    missing build.
@@ -35,7 +36,7 @@ the program's console output against each test case's expected output, character
    For each test case:
    - Write its Input lines to a temp file (e.g. in your scratchpad directory, or `/tmp` if you don't have
      one).
-   - Run `java -cp bin Bott < <input-file>` and capture stdout.
+   - Run `java -cp bin bott.Bott < <input-file>` and capture stdout.
    - Compare the captured output to the test case's Expected output **exactly** — every character,
      including leading spaces before divider lines and message text, and trailing blank lines. Do not
      trim, normalize, or otherwise treat whitespace as insignificant; Bott's output format is the product
