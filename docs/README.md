@@ -104,6 +104,26 @@ Expected output (after adding the todo, deadline, and event above):
     ____________________________________________________________
 ```
 
+## Finding tasks: `find`
+
+Shows every task whose description contains the given keyword, matching case-insensitively, numbered
+from 1 (this numbering is just for this result — it doesn't change the tasks' numbers in `list`).
+
+Example: `find <keyword>`
+
+```
+find book
+```
+
+Expected output (given a list containing "read book" and "return book (by: June 6th)", among others):
+```
+    ____________________________________________________________
+     Here are the matching tasks in your list:
+     1.[T][X] read book
+     2.[D][X] return book (by: June 6th)
+    ____________________________________________________________
+```
+
 ## Marking a task as done: `mark`
 
 Marks the given task number (as shown by `list`) as done.
@@ -197,7 +217,7 @@ blah
 Expected output:
 ```
     ____________________________________________________________
-     OOPS!!! I don't recognize "blah" as a command. Try: list, todo, deadline, event, mark, unmark, delete, or bye.
+     OOPS!!! I don't recognize "blah" as a command. Try: list, todo, deadline, event, find, mark, unmark, delete, or bye.
     ____________________________________________________________
 ```
 
@@ -213,6 +233,7 @@ non-numeric, or out-of-range task number, and `deadline`/`event` reject a missin
 | Add a deadline | `deadline <description> /by <date/time>` | `deadline return book /by Sunday` |
 | Add an event | `event <description> /from <start> /to <end>` | `event project meeting /from Mon 2pm /to 4pm` |
 | List all tasks | `list` | `list` |
+| Find tasks by keyword | `find <keyword>` | `find book` |
 | Mark a task as done | `mark <task number>` | `mark 1` |
 | Mark a task as not done | `unmark <task number>` | `unmark 1` |
 | Delete a task | `delete <task number>` | `delete 1` |

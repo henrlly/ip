@@ -61,4 +61,13 @@ public class Task {
     public String toFileFormat() {
         return type.getIcon() + " | " + (isDone ? "1" : "0") + " | " + description;
     }
+
+    /**
+     * Returns whether this task's description contains the given keyword, ignoring case.
+     *
+     * @param keyword Keyword to search for.
+     */
+    public boolean matchesKeyword(String keyword) {
+        return description.toLowerCase().contains(keyword.toLowerCase());
+    }
 }

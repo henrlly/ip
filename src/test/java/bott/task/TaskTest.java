@@ -1,12 +1,14 @@
 package bott.task;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests {@link Task}: status tracking and its two textual representations
- * ({@code toString} for display, {@code toFileFormat} for the save file).
+ * Tests {@link Task}: status tracking, keyword matching, and its two textual
+ * representations ({@code toString} for display, {@code toFileFormat} for the save file).
  */
 public class TaskTest {
 
@@ -67,5 +69,29 @@ public class TaskTest {
         Task task = new Task("read book", TaskType.TODO);
         task.markAsDone();
         assertEquals("T | 1 | read book", task.toFileFormat());
+    }
+
+    @Test
+    public void matchesKeyword_descriptionContainsKeyword_returnsTrue() {
+        Task task = new Task("read book", TaskType.TODO);
+        assertTrue(task.matchesKeyword("book"));
+    }
+
+    @Test
+    public void matchesKeyword_differentCase_returnsTrue() {
+        Task task = new Task("read book", TaskType.TODO);
+        assertTrue(task.matchesKeyword("BOOK"));
+    }
+
+    @Test
+    public void matchesKeyword_descriptionDoesNotContainKeyword_returnsFalse() {
+        Task task = new Task("read book", TaskType.TODO);
+        assertFalse(task.matchesKeyword("homework"));
+    }
+
+    @Test
+    public void matchesKeyword_partialWordMatch_returnsTrue() {
+        Task task = new Task("read book", TaskType.TODO);
+        assertTrue(task.matchesKeyword("boo"));
     }
 }

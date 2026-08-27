@@ -1,5 +1,6 @@
 package bott.task;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,5 +58,21 @@ public class TaskList {
     /** Returns the tasks in the list, in order. */
     public List<Task> getTasks() {
         return tasks;
+    }
+
+    /**
+     * Returns the tasks whose description contains the given keyword.
+     *
+     * @param keyword Keyword to search for.
+     * @return Matching tasks, in list order.
+     */
+    public List<Task> find(String keyword) {
+        List<Task> matches = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.matchesKeyword(keyword)) {
+                matches.add(task);
+            }
+        }
+        return matches;
     }
 }

@@ -74,6 +74,9 @@ public class Bott {
             case "delete":
                 deleteTask(args);
                 break;
+            case "find":
+                findTasks(args);
+                break;
             case "todo":
                 addTask(Parser.parseTodo(args));
                 break;
@@ -85,8 +88,11 @@ public class Bott {
                 break;
             default:
                 throw new BottException(
-                        "I don't recognize \"" + command
-                                + "\" as a command. Try: list, todo, deadline, event, mark, unmark, delete, or bye.");
+                    "I don't recognize \"" +
+                        command +
+                        "\" as a command. Try: list, todo, deadline, event, find, mark, unmark, delete," +
+                        " or bye."
+                );
         }
     }
 
@@ -118,6 +124,17 @@ public class Bott {
     }
 
     /**
+     * Prints the tasks whose description matches a "find" command's keyword.
+     *
+     * @param args Text after the "find" command word.
+     * @throws BottException If {@code args} has no keyword.
+     */
+    private void findTasks(String args) throws BottException {
+        String keyword = Parser.parseFind(args);
+        ui.showMatchingTasks(tasks.find(keyword));
+    }
+
+    /**
      * Marks or unmarks the task named in a "mark"/"unmark" command's
      * arguments and prints Bott's response.
      *
@@ -128,8 +145,13 @@ public class Bott {
      * @throws BottException If {@code args} does not name an existing task,
      *         or the updated task list cannot be saved.
      */
-    private void setTaskStatus(String commandName, String args, boolean isDone) throws BottException {
-        int taskNumber = Parser.parseTaskNumber(commandName, args, tasks.size());
+    private void setTaskStatus(String commandName, String args, boolean isDone)
+        throws BottException {
+        int taskNumber = Parser.parseTaskNumber(
+            commandName,
+            args,
+            tasks.size()
+        );
         Task task = tasks.get(taskNumber);
         if (isDone) {
             task.markAsDone();
