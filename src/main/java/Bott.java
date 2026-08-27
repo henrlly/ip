@@ -1,8 +1,6 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
-import java.util.List;
-
 /**
  * The main entry point for the Bott chatbot.
  */
@@ -12,7 +10,7 @@ public class Bott {
 
     private final Ui ui;
     private final Storage storage;
-    private final List<Task> tasks;
+    private final TaskList tasks;
 
     /**
      * Creates a new Bott instance, loading any tasks previously saved to
@@ -23,7 +21,7 @@ public class Bott {
     public Bott(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
-        tasks = storage.load();
+        tasks = new TaskList(storage.load());
     }
 
     /** Runs Bott's read-execute loop until the user types "bye". */
@@ -60,7 +58,7 @@ public class Bott {
 
         switch (command) {
         case "list":
-            ui.showTaskList(tasks);
+            ui.showTaskList(tasks.getTasks());
             break;
         case "mark":
             setTaskStatus("mark", args, true);
@@ -95,7 +93,7 @@ public class Bott {
      */
     private void addTask(Task task) throws BottException {
         tasks.add(task);
-        storage.save(tasks);
+        storage.save(tasks.getTasks());
         ui.showTaskAdded(task, tasks.size());
     }
 
@@ -109,8 +107,8 @@ public class Bott {
      */
     private void deleteTask(String args) throws BottException {
         int taskNumber = parseTaskNumber("delete", args, tasks.size());
-        Task removedTask = tasks.remove(taskNumber - 1);
-        storage.save(tasks);
+        Task removedTask = tasks.remove(taskNumber);
+        storage.save(tasks.getTasks());
         ui.showTaskDeleted(removedTask, tasks.size());
     }
 
@@ -239,7 +237,7 @@ public class Bott {
      */
     private void setTaskStatus(String commandName, String args, boolean isDone) throws BottException {
         int taskNumber = parseTaskNumber(commandName, args, tasks.size());
-        Task task = tasks.get(taskNumber - 1);
+        Task task = tasks.get(taskNumber);
         if (isDone) {
             task.markAsDone();
             ui.showTaskMarked(task);
@@ -247,7 +245,7 @@ public class Bott {
             task.markAsNotDone();
             ui.showTaskUnmarked(task);
         }
-        storage.save(tasks);
+        storage.save(tasks.getTasks());
     }
 
     /**
