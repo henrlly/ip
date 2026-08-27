@@ -3,12 +3,12 @@ package bott.parser;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.junit.jupiter.api.Test;
+
 import bott.BottException;
 import bott.task.Deadline;
 import bott.task.Event;
 import bott.task.Todo;
-
-import org.junit.jupiter.api.Test;
 
 /**
  * Tests every public method of {@link Parser}. {@code parseDate} is private and has no test of

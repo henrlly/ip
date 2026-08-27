@@ -1,12 +1,12 @@
 package bott.parser;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
 import bott.BottException;
 import bott.task.Deadline;
 import bott.task.Event;
 import bott.task.Todo;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 
 /**
  * Makes sense of raw command-line input typed by the user: splitting it

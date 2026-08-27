@@ -62,31 +62,31 @@ public class Bott {
         String args = Parser.getArguments(input);
 
         switch (command) {
-        case "list":
-            ui.showTaskList(tasks.getTasks());
-            break;
-        case "mark":
-            setTaskStatus("mark", args, true);
-            break;
-        case "unmark":
-            setTaskStatus("unmark", args, false);
-            break;
-        case "delete":
-            deleteTask(args);
-            break;
-        case "todo":
-            addTask(Parser.parseTodo(args));
-            break;
-        case "deadline":
-            addTask(Parser.parseDeadline(args));
-            break;
-        case "event":
-            addTask(Parser.parseEvent(args));
-            break;
-        default:
-            throw new BottException(
-                    "I don't recognize \"" + command
-                            + "\" as a command. Try: list, todo, deadline, event, mark, unmark, delete, or bye.");
+            case "list":
+                ui.showTaskList(tasks.getTasks());
+                break;
+            case "mark":
+                setTaskStatus("mark", args, true);
+                break;
+            case "unmark":
+                setTaskStatus("unmark", args, false);
+                break;
+            case "delete":
+                deleteTask(args);
+                break;
+            case "todo":
+                addTask(Parser.parseTodo(args));
+                break;
+            case "deadline":
+                addTask(Parser.parseDeadline(args));
+                break;
+            case "event":
+                addTask(Parser.parseEvent(args));
+                break;
+            default:
+                throw new BottException(
+                        "I don't recognize \"" + command
+                                + "\" as a command. Try: list, todo, deadline, event, mark, unmark, delete, or bye.");
         }
     }
 

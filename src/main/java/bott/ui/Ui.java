@@ -1,9 +1,9 @@
 package bott.ui;
 
-import bott.task.Task;
-
 import java.util.List;
 import java.util.Scanner;
+
+import bott.task.Task;
 
 /**
  * Handles all interaction with the user: printing Bott's messages to the

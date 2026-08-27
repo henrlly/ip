@@ -4,12 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import bott.BottException;
-import bott.task.Deadline;
-import bott.task.Event;
-import bott.task.Task;
-import bott.task.Todo;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,6 +13,12 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+
+import bott.BottException;
+import bott.task.Deadline;
+import bott.task.Event;
+import bott.task.Task;
+import bott.task.Todo;
 
 /**
  * Tests {@link Storage}. {@code parseSavedTask} is private and has no test of its own; its
