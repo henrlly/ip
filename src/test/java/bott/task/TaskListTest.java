@@ -2,6 +2,7 @@ package bott.task;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,5 +96,31 @@ public class TaskListTest {
         assertEquals(3, tasks.size());
         assertEquals("[T][ ] first", tasks.get(0).toString());
         assertEquals("[T][ ] third", tasks.get(2).toString());
+    }
+
+    @Test
+    public void find_someTasksMatch_returnsOnlyMatchesInOrder() {
+        List<Task> tasks = new ArrayList<>();
+        tasks.add(new Todo("read book"));
+        tasks.add(new Todo("join sports club"));
+        tasks.add(new Todo("return book"));
+        TaskList taskList = new TaskList(tasks);
+
+        List<Task> matches = taskList.find("book");
+
+        assertEquals(2, matches.size());
+        assertEquals("[T][ ] read book", matches.get(0).toString());
+        assertEquals("[T][ ] return book", matches.get(1).toString());
+    }
+
+    @Test
+    public void find_noTasksMatch_returnsEmptyList() {
+        TaskList taskList = threeTaskList();
+        assertTrue(taskList.find("zzz").isEmpty());
+    }
+
+    @Test
+    public void find_emptyList_returnsEmptyList() {
+        assertTrue(new TaskList(new ArrayList<>()).find("book").isEmpty());
     }
 }

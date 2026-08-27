@@ -335,7 +335,7 @@ bye
     ____________________________________________________________
 
     ____________________________________________________________
-     OOPS!!! I don't recognize "blah" as a command. Try: list, todo, deadline, event, mark, unmark, delete, or bye.
+     OOPS!!! I don't recognize "blah" as a command. Try: list, todo, deadline, event, find, mark, unmark, delete, or bye.
     ____________________________________________________________
 
     ____________________________________________________________
@@ -695,6 +695,103 @@ bye
     ____________________________________________________________
      Here are the tasks in your list:
      1.[T][ ] valid task
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Bye. Hope to see you again soon!
+    ____________________________________________________________
+
+```
+
+### TC13 — Find tasks by keyword
+
+**Aim:** `find <keyword>` lists only the tasks whose description contains the keyword, matching
+case-insensitively, renumbered from 1 regardless of the tasks' positions in the full list; a keyword that
+matches nothing shows just the header with no tasks listed; `find` with no keyword produces a specific
+error; none of this changes the underlying list, as the closing `list` shows.
+
+**Input:**
+```
+todo read book
+deadline return book /by 2019-06-06
+todo join sports club
+mark 1
+mark 2
+find book
+find BOOK
+find zzz
+find
+list
+bye
+```
+
+**Expected output:**
+```
+    ____________________________________________________________
+ ____     ___     _____   _____ 
+|  _ \   / _ \   |_   _| |_   _|
+| |_) | | | | |    | |     | |  
+|  _ <  | | | |    | |     | |  
+| |_) | | |_| |    | |     | |  
+|____/   \___/     |_|     |_|  
+    ____________________________________________________________
+     Hello! I'm Bott.
+     What can I do for you?
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Got it. I've added this task:
+       [T][ ] read book
+     Now you have 1 tasks in the list.
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Got it. I've added this task:
+       [D][ ] return book (by: Jun 06 2019)
+     Now you have 2 tasks in the list.
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Got it. I've added this task:
+       [T][ ] join sports club
+     Now you have 3 tasks in the list.
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Nice! I've marked this task as done:
+       [T][X] read book
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Nice! I've marked this task as done:
+       [D][X] return book (by: Jun 06 2019)
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Here are the matching tasks in your list:
+     1.[T][X] read book
+     2.[D][X] return book (by: Jun 06 2019)
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Here are the matching tasks in your list:
+     1.[T][X] read book
+     2.[D][X] return book (by: Jun 06 2019)
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Here are the matching tasks in your list:
+    ____________________________________________________________
+
+    ____________________________________________________________
+     OOPS!!! Please specify a keyword to search for. Try: find <keyword>
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Here are the tasks in your list:
+     1.[T][X] read book
+     2.[D][X] return book (by: Jun 06 2019)
+     3.[T][ ] join sports club
     ____________________________________________________________
 
     ____________________________________________________________

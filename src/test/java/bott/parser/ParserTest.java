@@ -192,6 +192,24 @@ public class ParserTest {
                 + "\"bad-date\" is not a valid date.", exception.getMessage());
     }
 
+    // ---- parseFind ----
+
+    @Test
+    public void parseFind_validKeyword_returnsTrimmedKeyword() throws BottException {
+        assertEquals("book", Parser.parseFind("  book  "));
+    }
+
+    @Test
+    public void parseFind_emptyArgs_exceptionThrown() {
+        BottException exception = assertThrows(BottException.class, () -> Parser.parseFind(""));
+        assertEquals("Please specify a keyword to search for. Try: find <keyword>", exception.getMessage());
+    }
+
+    @Test
+    public void parseFind_whitespaceOnlyArgs_exceptionThrown() {
+        assertThrows(BottException.class, () -> Parser.parseFind("   "));
+    }
+
     // ---- parseTaskNumber ----
 
     @Test

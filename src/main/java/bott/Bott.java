@@ -73,6 +73,9 @@ public class Bott {
         case "delete":
             deleteTask(args);
             break;
+        case "find":
+            findTasks(args);
+            break;
         case "todo":
             addTask(Parser.parseTodo(args));
             break;
@@ -85,7 +88,8 @@ public class Bott {
         default:
             throw new BottException(
                     "I don't recognize \"" + command
-                            + "\" as a command. Try: list, todo, deadline, event, mark, unmark, delete, or bye.");
+                            + "\" as a command. Try: list, todo, deadline, event, find, mark, unmark, delete,"
+                            + " or bye.");
         }
     }
 
@@ -114,6 +118,17 @@ public class Bott {
         Task removedTask = tasks.remove(taskNumber);
         storage.save(tasks.getTasks());
         ui.showTaskDeleted(removedTask, tasks.size());
+    }
+
+    /**
+     * Prints the tasks whose description matches a "find" command's keyword.
+     *
+     * @param args Text after the "find" command word.
+     * @throws BottException If {@code args} has no keyword.
+     */
+    private void findTasks(String args) throws BottException {
+        String keyword = Parser.parseFind(args);
+        ui.showMatchingTasks(tasks.find(keyword));
     }
 
     /**

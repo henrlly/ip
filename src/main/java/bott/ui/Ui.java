@@ -64,12 +64,16 @@ public class Ui {
      * @param tasks Tasks stored so far.
      */
     public void showTaskList(List<Task> tasks) {
-        String[] lines = new String[tasks.size() + 1];
-        lines[0] = "Here are the tasks in your list:";
-        for (int i = 0; i < tasks.size(); i++) {
-            lines[i + 1] = (i + 1) + "." + tasks.get(i);
-        }
-        printMessage(lines);
+        showNumberedTasks("Here are the tasks in your list:", tasks);
+    }
+
+    /**
+     * Prints the tasks matching a "find" command's keyword.
+     *
+     * @param matches Tasks whose description matched the keyword, in list order.
+     */
+    public void showMatchingTasks(List<Task> matches) {
+        showNumberedTasks("Here are the matching tasks in your list:", matches);
     }
 
     /**
@@ -114,6 +118,18 @@ public class Ui {
      */
     public void showTaskUnmarked(Task task) {
         printMessage("OK, I've marked this task as not done yet:", "  " + task);
+    }
+
+    /**
+     * Prints a header line followed by one numbered line per task.
+     */
+    private void showNumberedTasks(String header, List<Task> tasks) {
+        String[] lines = new String[tasks.size() + 1];
+        lines[0] = header;
+        for (int i = 0; i < tasks.size(); i++) {
+            lines[i + 1] = (i + 1) + "." + tasks.get(i);
+        }
+        printMessage(lines);
     }
 
     /**

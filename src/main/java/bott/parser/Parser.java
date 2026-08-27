@@ -152,6 +152,20 @@ public class Parser {
     }
 
     /**
+     * Parses the arguments of a "find" command.
+     *
+     * @param args Text after the "find" command word.
+     * @return Keyword to search task descriptions for.
+     * @throws BottException If {@code args} has no keyword.
+     */
+    public static String parseFind(String args) throws BottException {
+        if (args.isBlank()) {
+            throw new BottException("Please specify a keyword to search for. Try: find <keyword>");
+        }
+        return args.trim();
+    }
+
+    /**
      * Parses and validates the task number argument of a "mark"/"unmark"/
      * "delete" command.
      *
