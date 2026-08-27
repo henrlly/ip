@@ -25,7 +25,14 @@ the program's console output against each test case's expected output, character
    the final blank line after the farewell message).
 
 3. **Run each test case, in order.** Each test case is one independent, fresh run of the program (its
-   Input lines all go to a single invocation). For each test case:
+   Input lines all go to a single invocation), unless its Aim says it spans multiple runs (used for
+   testing that saved tasks persist across restarts). Bott persists tasks to `data/bott.txt`, so:
+   - Before a normal (single-run) test case, delete `data/bott.txt` if it exists, so no leftover state
+     from an earlier test case leaks in.
+   - Before the *first* run of a multi-run test case, also delete `data/bott.txt`. Do NOT delete it
+     between that test case's own runs — the shared file is what's being tested.
+
+   For each test case:
    - Write its Input lines to a temp file (e.g. in your scratchpad directory, or `/tmp` if you don't have
      one).
    - Run `java -cp bin Bott < <input-file>` and capture stdout.

@@ -45,4 +45,11 @@ public class Task {
     public String toString() {
         return "[" + type.getIcon() + "][" + getStatusIcon() + "] " + description;
     }
+
+    /**
+     * Returns this task's representation for saving to file, e.g. "T | 1 | read book".
+     */
+    public String toFileFormat() {
+        return type.getIcon() + " | " + (isDone ? "1" : "0") + " | " + description;
+    }
 }
