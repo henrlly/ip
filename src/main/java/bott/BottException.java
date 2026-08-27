@@ -1,3 +1,5 @@
+package bott;
+
 /**
  * Represents an error specific to Bott, such as an invalid or incomplete
  * command entered by the user.

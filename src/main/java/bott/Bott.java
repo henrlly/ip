@@ -1,3 +1,11 @@
+package bott;
+
+import bott.parser.Parser;
+import bott.storage.Storage;
+import bott.task.Task;
+import bott.task.TaskList;
+import bott.ui.Ui;
+
 /**
  * The main entry point for the Bott chatbot.
  */

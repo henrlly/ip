@@ -1,3 +1,5 @@
+package bott.task;
+
 /**
  * Represents the kind of a task, and the single-letter icon used to
  * display it, e.g. "[T]" for {@link #TODO}.

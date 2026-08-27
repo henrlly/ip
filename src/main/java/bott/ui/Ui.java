@@ -1,3 +1,7 @@
+package bott.ui;
+
+import bott.task.Task;
+
 import java.util.List;
 import java.util.Scanner;
 
