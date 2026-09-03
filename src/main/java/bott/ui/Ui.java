@@ -6,8 +6,14 @@ import java.util.Scanner;
 import bott.task.Task;
 
 /**
- * Handles all interaction with the user: printing Bott's messages to the
- * console, and reading the commands the user types.
+ * Produces the text of Bott's responses, and drives the console interface:
+ * reading the commands the user types and printing Bott's replies wrapped
+ * in horizontal dividers.
+ *
+ * <p>The {@code get...Message} methods return a reply as a plain string
+ * (lines separated by {@code "\n"}, no divider or indent). The console
+ * uses them via {@link #showMessage(String)}; the GUI uses the same
+ * methods to get divider-free text for its dialog bubbles.
  */
 public class Ui {
 
@@ -18,20 +24,22 @@ public class Ui {
     private static final String HORIZONTAL_LINE =
             INDENT + "____________________________________________________________";
 
+    /** Startup banner spelling out "BOTT", printed once above the greeting. */
+    private static final String BANNER =
+            " ____     ___     _____   _____ \n"
+            + "|  _ \\   / _ \\   |_   _| |_   _|\n"
+            + "| |_) | | | | |    | |     | |  \n"
+            + "|  _ <  | | | |    | |     | |  \n"
+            + "| |_) | | |_| |    | |     | |  \n"
+            + "|____/   \\___/     |_|     |_|  \n";
+
     private final Scanner scanner = new Scanner(System.in);
 
-    /** Prints Bott's startup banner and greeting. */
+    /** Prints Bott's startup banner and greeting to the console. */
     public void showWelcome() {
-        String banner =
-                " ____     ___     _____   _____ \n"
-                + "|  _ \\   / _ \\   |_   _| |_   _|\n"
-                + "| |_) | | | | |    | |     | |  \n"
-                + "|  _ <  | | | |    | |     | |  \n"
-                + "| |_) | | |_| |    | |     | |  \n"
-                + "|____/   \\___/     |_|     |_|  \n";
         System.out.println(HORIZONTAL_LINE);
-        System.out.print(banner);
-        printMessage("Hello! I'm Bott.", "What can I do for you?");
+        System.out.print(BANNER);
+        showMessage(getWelcomeMessage());
     }
 
     /**
@@ -43,105 +51,126 @@ public class Ui {
         return scanner.nextLine();
     }
 
-    /** Prints Bott's farewell message and releases the input resources. */
+    /** Prints Bott's farewell message to the console and releases the input resources. */
     public void showGoodbye() {
-        printMessage("Bye. Hope to see you again soon!");
+        showMessage(getGoodbyeMessage());
         scanner.close();
     }
 
     /**
-     * Prints an error message prefixed with "OOPS!!!".
+     * Prints an error message to the console.
      *
      * @param message Description of what went wrong.
      */
     public void showError(String message) {
-        printMessage("OOPS!!! " + message);
+        showMessage(getErrorMessage(message));
     }
 
     /**
-     * Prints the full task list.
+     * Prints a reply to the console: each line indented and the whole
+     * block wrapped in horizontal dividers, followed by a blank line.
+     *
+     * @param message Reply text, with lines separated by {@code "\n"}.
+     */
+    public void showMessage(String message) {
+        System.out.println(HORIZONTAL_LINE);
+        for (String line : message.split("\n", -1)) {
+            System.out.println(INDENT + " " + line);
+        }
+        System.out.println(HORIZONTAL_LINE);
+        System.out.println();
+    }
+
+    /** Returns Bott's greeting. */
+    public String getWelcomeMessage() {
+        return "Hello! I'm Bott.\nWhat can I do for you?";
+    }
+
+    /** Returns Bott's farewell message. */
+    public String getGoodbyeMessage() {
+        return "Bye. Hope to see you again soon!";
+    }
+
+    /**
+     * Returns an error message prefixed with "OOPS!!!".
+     *
+     * @param message Description of what went wrong.
+     */
+    public String getErrorMessage(String message) {
+        return "OOPS!!! " + message;
+    }
+
+    /**
+     * Returns the full task list as a numbered message.
      *
      * @param tasks Tasks stored so far.
      */
-    public void showTaskList(List<Task> tasks) {
-        showNumberedTasks("Here are the tasks in your list:", tasks);
+    public String getTaskListMessage(List<Task> tasks) {
+        return numberedTasks("Here are the tasks in your list:", tasks);
     }
 
     /**
-     * Prints the tasks matching a "find" command's keyword.
+     * Returns the tasks matching a "find" command's keyword as a numbered message.
      *
      * @param matches Tasks whose description matched the keyword, in list order.
      */
-    public void showMatchingTasks(List<Task> matches) {
-        showNumberedTasks("Here are the matching tasks in your list:", matches);
+    public String getMatchingTasksMessage(List<Task> matches) {
+        return numberedTasks("Here are the matching tasks in your list:", matches);
     }
 
     /**
-     * Prints acknowledgement that a task was added.
+     * Returns acknowledgement that a task was added.
      *
      * @param task Task that was added.
      * @param taskCount Total number of tasks now stored.
      */
-    public void showTaskAdded(Task task, int taskCount) {
-        printMessage(
+    public String getTaskAddedMessage(Task task, int taskCount) {
+        return String.join("\n",
                 "Got it. I've added this task:",
                 "  " + task,
                 "Now you have " + taskCount + " tasks in the list.");
     }
 
     /**
-     * Prints acknowledgement that a task was removed.
+     * Returns acknowledgement that a task was removed.
      *
      * @param task Task that was removed.
      * @param taskCount Total number of tasks remaining.
      */
-    public void showTaskDeleted(Task task, int taskCount) {
-        printMessage(
+    public String getTaskDeletedMessage(Task task, int taskCount) {
+        return String.join("\n",
                 "Noted. I've removed this task:",
                 "  " + task,
                 "Now you have " + taskCount + " tasks in the list.");
     }
 
     /**
-     * Prints acknowledgement that a task was marked as done.
+     * Returns acknowledgement that a task was marked as done.
      *
      * @param task Task that was marked as done.
      */
-    public void showTaskMarked(Task task) {
-        printMessage("Nice! I've marked this task as done:", "  " + task);
+    public String getTaskMarkedMessage(Task task) {
+        return "Nice! I've marked this task as done:\n  " + task;
     }
 
     /**
-     * Prints acknowledgement that a task was marked as not done.
+     * Returns acknowledgement that a task was marked as not done.
      *
      * @param task Task that was marked as not done.
      */
-    public void showTaskUnmarked(Task task) {
-        printMessage("OK, I've marked this task as not done yet:", "  " + task);
+    public String getTaskUnmarkedMessage(Task task) {
+        return "OK, I've marked this task as not done yet:\n  " + task;
     }
 
     /**
-     * Prints a header line followed by one numbered line per task.
+     * Returns a header line followed by one numbered line per task, e.g.
+     * "Here are the tasks in your list:\n1.[T][ ] read book".
      */
-    private void showNumberedTasks(String header, List<Task> tasks) {
-        String[] lines = new String[tasks.size() + 1];
-        lines[0] = header;
+    private String numberedTasks(String header, List<Task> tasks) {
+        StringBuilder message = new StringBuilder(header);
         for (int i = 0; i < tasks.size(); i++) {
-            lines[i + 1] = (i + 1) + "." + tasks.get(i);
+            message.append("\n").append(i + 1).append(".").append(tasks.get(i));
         }
-        printMessage(lines);
-    }
-
-    /**
-     * Prints one or more lines of a chatbot response, wrapped in horizontal
-     * dividers and indented to line up with them.
-     */
-    private void printMessage(String... lines) {
-        System.out.println(HORIZONTAL_LINE);
-        for (String line : lines) {
-            System.out.println(INDENT + " " + line);
-        }
-        System.out.println(HORIZONTAL_LINE);
-        System.out.println();
+        return message.toString();
     }
 }

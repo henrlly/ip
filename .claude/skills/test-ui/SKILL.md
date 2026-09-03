@@ -12,9 +12,11 @@ the program's console output against each test case's expected output, character
 
 1. **Compile.** Make sure Java 25 is active (`sdk use java 25.0.3.fx-zulu` if needed), then build a clean
    set of classes. Classes live under packages (e.g. `bott`, `bott.ui`, `bott.task`), so compile with a
-   recursive file list rather than a flat wildcard:
+   recursive file list rather than a flat wildcard. The `bott.gui` package (the JavaFX GUI) is excluded:
+   it needs the JavaFX libraries on the classpath — supplied by Gradle, not a plain `javac` — and none of
+   its classes are reachable from `bott.Bott`, so the console tests never exercise them:
    ```
-   rm -rf bin && mkdir bin && find src/main/java -name "*.java" | xargs javac -d bin
+   rm -rf bin && mkdir bin && find src/main/java -name "*.java" -not -path "*/gui/*" | xargs javac -d bin
    ```
    If compilation fails, stop here and report the compiler error — do not run tests against a stale or
    missing build.

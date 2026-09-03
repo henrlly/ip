@@ -26,6 +26,10 @@ did.
    horizontal lines.
 4. Type `bye` when you're done, and Bott will say goodbye and the program will exit.
 
+Bott also has a graphical interface: run `./gradlew run` to open a chat window where you type the
+same commands into a text box and Bott's replies appear as chat bubbles. The commands below are
+identical in both interfaces (the console examples just show the extra divider lines).
+
 Tasks only exist for the current session — closing Bott clears them. There is currently no support
 for saving tasks to disk between sessions.
 
