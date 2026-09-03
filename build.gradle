@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'application'
     id 'com.gradleup.shadow' version '9.5.1'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 
 java {
@@ -11,6 +12,12 @@ java {
 
 repositories {
     mavenCentral()
+}
+
+javafx {
+    // Only the base controls are used; the GUI is built in code, without FXML.
+    version = '25'
+    modules = ['javafx.controls']
 }
 
 dependencies {
@@ -37,7 +44,8 @@ test {
 }
 
 application {
-    mainClass = 'bott.Bott'
+    // The console interface stays available via bott.Bott.main().
+    mainClass = 'bott.gui.Launcher'
 }
 
 jar {
