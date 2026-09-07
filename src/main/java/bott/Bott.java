@@ -189,6 +189,11 @@ public class Bott {
      */
     private String setTaskStatus(String commandName, String args, boolean isDone)
         throws BottException {
+        // Only the "mark" and "unmark" switch branches call this helper, and
+        // it embeds commandName in its error text and pairs it with isDone;
+        // any other value would mean a future edit misrouted a command here.
+        assert commandName.equals("mark") || commandName.equals("unmark")
+            : "expected mark/unmark, got: " + commandName;
         int taskNumber = Parser.parseTaskNumber(
             commandName,
             args,

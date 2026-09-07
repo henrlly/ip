@@ -18,6 +18,10 @@ public class TaskList {
      * @param tasks Tasks to start with.
      */
     public TaskList(List<Task> tasks) {
+        // Storage.load() is the only production caller and always returns a
+        // list (empty when there is no save file), never null; a null here
+        // would be an internal contract violation, not a user error.
+        assert tasks != null : "task list must not be null";
         this.tasks = tasks;
     }
 
@@ -37,6 +41,11 @@ public class TaskList {
      * @return Removed task.
      */
     public Task remove(int taskNumber) {
+        // Callers pass a position already validated by Parser.parseTaskNumber,
+        // so it must be within 1..size here; an out-of-range value means a
+        // caller skipped that check (a bug), not that the user mistyped.
+        assert taskNumber >= 1 && taskNumber <= tasks.size()
+                : "task position out of range: " + taskNumber;
         return tasks.remove(taskNumber - 1);
     }
 
@@ -47,6 +56,10 @@ public class TaskList {
      * @return Task at that position.
      */
     public Task get(int taskNumber) {
+        // Same precondition as remove(): the position is expected to have
+        // been validated already, so it must map to an existing task.
+        assert taskNumber >= 1 && taskNumber <= tasks.size()
+                : "task position out of range: " + taskNumber;
         return tasks.get(taskNumber - 1);
     }
 

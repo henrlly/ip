@@ -24,7 +24,12 @@ public class Parser {
      *         input if there is no space).
      */
     public static String getCommandWord(String input) {
-        return input.split(" ", 2)[0];
+        String[] commandAndArgs = input.split(" ", 2);
+        // Indexing [0] unconditionally is safe only because String.split with
+        // a positive limit always returns at least the input itself, even for
+        // an empty or all-blank line; make that reliance explicit.
+        assert commandAndArgs.length >= 1 : "split should yield at least one element";
+        return commandAndArgs[0];
     }
 
     /**
