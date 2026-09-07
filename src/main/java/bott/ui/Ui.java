@@ -125,10 +125,7 @@ public class Ui {
      * @param taskCount Total number of tasks now stored.
      */
     public String getTaskAddedMessage(Task task, int taskCount) {
-        return String.join("\n",
-                "Got it. I've added this task:",
-                "  " + task,
-                "Now you have " + taskCount + " tasks in the list.");
+        return taskCountMessage("Got it. I've added this task:", task, taskCount);
     }
 
     /**
@@ -138,10 +135,7 @@ public class Ui {
      * @param taskCount Total number of tasks remaining.
      */
     public String getTaskDeletedMessage(Task task, int taskCount) {
-        return String.join("\n",
-                "Noted. I've removed this task:",
-                "  " + task,
-                "Now you have " + taskCount + " tasks in the list.");
+        return taskCountMessage("Noted. I've removed this task:", task, taskCount);
     }
 
     /**
@@ -160,6 +154,22 @@ public class Ui {
      */
     public String getTaskUnmarkedMessage(Task task) {
         return "OK, I've marked this task as not done yet:\n  " + task;
+    }
+
+    /**
+     * Returns a headline, the indented task, and the resulting task count
+     * as one message - the shape shared by the "added" and "removed"
+     * acknowledgements.
+     *
+     * @param headline First line of the message.
+     * @param task Task the message is about.
+     * @param taskCount Number of tasks now in the list.
+     */
+    private String taskCountMessage(String headline, Task task, int taskCount) {
+        return String.join("\n",
+                headline,
+                "  " + task,
+                "Now you have " + taskCount + " tasks in the list.");
     }
 
     /**

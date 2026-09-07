@@ -15,6 +15,16 @@ import bott.task.Todo;
  */
 public class Parser {
 
+    /** Markers that separate the parts of a deadline's or event's arguments. */
+    private static final String MARKER_BY = "/by";
+    private static final String MARKER_FROM = "/from";
+    private static final String MARKER_TO = "/to";
+
+    /** Format reminders appended to a command's error messages. */
+    private static final String USAGE_DEADLINE = "Try: deadline <description> /by <yyyy-MM-dd>";
+    private static final String USAGE_EVENT =
+            "Try: event <description> /from <yyyy-MM-dd> /to <yyyy-MM-dd>";
+
     /**
      * Returns the command word of a line of user input, e.g. "todo" for
      * "todo read book".
@@ -69,24 +79,19 @@ public class Parser {
      */
     public static Deadline parseDeadline(String args) throws BottException {
         if (args.isBlank()) {
-            throw new BottException(
-                    "A deadline needs a description. Try: deadline <description> /by <yyyy-MM-dd>");
+            throw new BottException("A deadline needs a description. " + USAGE_DEADLINE);
         }
-        int byIndex = args.indexOf("/by");
+        int byIndex = args.indexOf(MARKER_BY);
         if (byIndex == -1) {
-            throw new BottException(
-                    "A deadline needs a \"/by\" date. Try: deadline <description> /by <yyyy-MM-dd>");
+            throw new BottException("A deadline needs a \"/by\" date. " + USAGE_DEADLINE);
         }
         String description = args.substring(0, byIndex).trim();
-        String by = args.substring(byIndex + "/by".length()).trim();
+        String by = args.substring(byIndex + MARKER_BY.length()).trim();
         if (description.isEmpty()) {
-            throw new BottException(
-                    "A deadline needs a description. Try: deadline <description> /by <yyyy-MM-dd>");
+            throw new BottException("A deadline needs a description. " + USAGE_DEADLINE);
         }
         if (by.isEmpty()) {
-            throw new BottException(
-                    "The \"by\" date of a deadline cannot be empty. "
-                            + "Try: deadline <description> /by <yyyy-MM-dd>");
+            throw new BottException("The \"by\" date of a deadline cannot be empty. " + USAGE_DEADLINE);
         }
         return new Deadline(description, parseDate("by", by));
     }
@@ -102,37 +107,28 @@ public class Parser {
      */
     public static Event parseEvent(String args) throws BottException {
         if (args.isBlank()) {
-            throw new BottException(
-                    "An event needs a description. Try: event <description> /from <yyyy-MM-dd> /to <yyyy-MM-dd>");
+            throw new BottException("An event needs a description. " + USAGE_EVENT);
         }
-        int fromIndex = args.indexOf("/from");
+        int fromIndex = args.indexOf(MARKER_FROM);
         if (fromIndex == -1) {
-            throw new BottException(
-                    "An event needs a \"/from\" start date. "
-                            + "Try: event <description> /from <yyyy-MM-dd> /to <yyyy-MM-dd>");
+            throw new BottException("An event needs a \"/from\" start date. " + USAGE_EVENT);
         }
-        int toIndex = args.indexOf("/to", fromIndex);
+        int toIndex = args.indexOf(MARKER_TO, fromIndex);
         if (toIndex == -1) {
             throw new BottException(
-                    "An event needs a \"/to\" end date after its \"/from\" start date. "
-                            + "Try: event <description> /from <yyyy-MM-dd> /to <yyyy-MM-dd>");
+                    "An event needs a \"/to\" end date after its \"/from\" start date. " + USAGE_EVENT);
         }
         String description = args.substring(0, fromIndex).trim();
-        String from = args.substring(fromIndex + "/from".length(), toIndex).trim();
-        String to = args.substring(toIndex + "/to".length()).trim();
+        String from = args.substring(fromIndex + MARKER_FROM.length(), toIndex).trim();
+        String to = args.substring(toIndex + MARKER_TO.length()).trim();
         if (description.isEmpty()) {
-            throw new BottException(
-                    "An event needs a description. Try: event <description> /from <yyyy-MM-dd> /to <yyyy-MM-dd>");
+            throw new BottException("An event needs a description. " + USAGE_EVENT);
         }
         if (from.isEmpty()) {
-            throw new BottException(
-                    "The \"from\" start date of an event cannot be empty. "
-                            + "Try: event <description> /from <yyyy-MM-dd> /to <yyyy-MM-dd>");
+            throw new BottException("The \"from\" start date of an event cannot be empty. " + USAGE_EVENT);
         }
         if (to.isEmpty()) {
-            throw new BottException(
-                    "The \"to\" end date of an event cannot be empty. "
-                            + "Try: event <description> /from <yyyy-MM-dd> /to <yyyy-MM-dd>");
+            throw new BottException("The \"to\" end date of an event cannot be empty. " + USAGE_EVENT);
         }
         return new Event(description, parseDate("from", from), parseDate("to", to));
     }

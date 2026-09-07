@@ -12,9 +12,9 @@ public class Task {
     protected static final DateTimeFormatter DISPLAY_DATE_FORMAT =
             DateTimeFormatter.ofPattern("MMM dd yyyy", Locale.ENGLISH);
 
-    protected String description;
-    protected boolean isDone;
-    protected TaskType type;
+    private final String description;
+    private final TaskType type;
+    private boolean isDone;
 
     /**
      * Creates a new task with the given description and type. The task

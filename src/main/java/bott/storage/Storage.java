@@ -41,15 +41,13 @@ public class Storage {
      */
     public List<Task> load() {
         List<Task> tasks = new ArrayList<>();
-        try {
-            Scanner fileScanner = new Scanner(new File(filePath));
+        try (Scanner fileScanner = new Scanner(new File(filePath))) {
             while (fileScanner.hasNextLine()) {
                 Task task = parseSavedTask(fileScanner.nextLine());
                 if (task != null) {
                     tasks.add(task);
                 }
             }
-            fileScanner.close();
         } catch (FileNotFoundException exception) {
             // No save file yet - start with an empty task list.
         }
@@ -65,12 +63,10 @@ public class Storage {
     public void save(List<Task> tasks) throws BottException {
         File file = new File(filePath);
         file.getParentFile().mkdirs();
-        try {
-            FileWriter writer = new FileWriter(file);
+        try (FileWriter writer = new FileWriter(file)) {
             for (Task task : tasks) {
                 writer.write(task.toFileFormat() + System.lineSeparator());
             }
-            writer.close();
         } catch (IOException exception) {
             throw new BottException("Could not save tasks: " + exception.getMessage());
         }
