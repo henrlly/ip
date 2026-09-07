@@ -61,4 +61,7 @@ shadowJar {
 
 run {
     standardInput = System.in
+    // Run with -ea so the assert statements in the code are checked during
+    // development. (Gradle's 'test' task already enables assertions by default.)
+    enableAssertions = true
 }
