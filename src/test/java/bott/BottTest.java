@@ -51,6 +51,23 @@ public class BottTest {
     }
 
     @Test
+    public void getResponse_durationCommand_addsFixedDurationTask() {
+        String response = newBott().getResponse("duration read sales report /for 1h30m");
+        assertEquals(
+                "Got it. I've added this task:\n"
+                        + "  [F][ ] read sales report (for: 1h 30m)\n"
+                        + "Now you have 1 tasks in the list.",
+                response);
+    }
+
+    @Test
+    public void getResponse_durationWithInvalidTime_returnsErrorMessage() {
+        assertEquals(
+                "OOPS!!! \"2\" is not a valid duration. Use a number with a unit, e.g. 2h, 30m, or 1h30m.",
+                newBott().getResponse("duration read sales report /for 2"));
+    }
+
+    @Test
     public void getResponse_unknownCommand_returnsErrorMessage() {
         String response = newBott().getResponse("blah");
         assertTrue(response.startsWith("OOPS!!! I don't recognize \"blah\" as a command."));

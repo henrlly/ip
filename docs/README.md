@@ -91,6 +91,29 @@ Expected output:
     ____________________________________________________________
 ```
 
+## Adding a fixed-duration task: `duration`
+
+Adds a task that needs a set amount of time but has no fixed start or end — for example, a
+sales report that will take two hours to read whenever you get to it.
+
+Give the amount after `/for` as `<hours>h`, `<minutes>m`, or the two combined (`1h30m` or
+`1h 30m`). A unit is required, and the total must be more than zero.
+
+Example: `duration <description> /for <amount>`
+
+```
+duration read sales report /for 2h
+```
+
+Expected output:
+```
+    ____________________________________________________________
+     Got it. I've added this task:
+       [F][ ] read sales report (for: 2h)
+     Now you have 1 tasks in the list.
+    ____________________________________________________________
+```
+
 ## Listing all tasks: `list`
 
 Shows every task currently stored, numbered in the order they were added, along with its type icon
@@ -221,13 +244,13 @@ blah
 Expected output:
 ```
     ____________________________________________________________
-     OOPS!!! I don't recognize "blah" as a command. Try: list, todo, deadline, event, find, mark, unmark, delete, or bye.
+     OOPS!!! I don't recognize "blah" as a command. Try: list, todo, deadline, event, duration, find, mark, unmark, delete, or bye.
     ____________________________________________________________
 ```
 
 Other commands are validated the same way — for example, `mark`/`unmark`/`delete` reject a missing,
-non-numeric, or out-of-range task number, and `deadline`/`event` reject a missing `/by`, `/from`, or
-`/to`.
+non-numeric, or out-of-range task number, `deadline`/`event` reject a missing `/by`, `/from`, or
+`/to`, and `duration` rejects a missing `/for` or an amount without an `h`/`m` unit.
 
 ## Command summary
 
@@ -236,6 +259,7 @@ non-numeric, or out-of-range task number, and `deadline`/`event` reject a missin
 | Add a todo | `todo <description>` | `todo borrow book` |
 | Add a deadline | `deadline <description> /by <date/time>` | `deadline return book /by Sunday` |
 | Add an event | `event <description> /from <start> /to <end>` | `event project meeting /from Mon 2pm /to 4pm` |
+| Add a fixed-duration task | `duration <description> /for <amount>` | `duration read sales report /for 2h` |
 | List all tasks | `list` | `list` |
 | Find tasks by keyword | `find <keyword>` | `find book` |
 | Mark a task as done | `mark <task number>` | `mark 1` |

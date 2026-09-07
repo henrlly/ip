@@ -335,7 +335,7 @@ bye
     ____________________________________________________________
 
     ____________________________________________________________
-     OOPS!!! I don't recognize "blah" as a command. Try: list, todo, deadline, event, find, mark, unmark, delete, or bye.
+     OOPS!!! I don't recognize "blah" as a command. Try: list, todo, deadline, event, duration, find, mark, unmark, delete, or bye.
     ____________________________________________________________
 
     ____________________________________________________________
@@ -792,6 +792,168 @@ bye
      1.[T][X] read book
      2.[D][X] return book (by: Jun 06 2019)
      3.[T][ ] join sports club
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Bye. Hope to see you again soon!
+    ____________________________________________________________
+
+```
+
+### TC14 — Fixed-duration tasks: add, list, and persist across restarts
+
+**Aim:** `duration <description> /for <amount>` stores a task with a `[F]` icon and no
+start/end time; the amount accepts `Xh`, `Ym`, and combined `XhYm`, and displays as
+`(for: ...)` with a zero component dropped. Like TC11, this is two separate runs sharing the
+same `data/bott.txt` (do not delete it between the two runs) — it checks that fixed-duration
+tasks, including their done status, reload on the next start.
+
+**Run A — Input:**
+```
+duration read sales report /for 2h
+duration call bank /for 45m
+duration deep work block /for 1h30m
+mark 2
+bye
+```
+
+**Run A — Expected output:**
+```
+    ____________________________________________________________
+ ____     ___     _____   _____ 
+|  _ \   / _ \   |_   _| |_   _|
+| |_) | | | | |    | |     | |  
+|  _ <  | | | |    | |     | |  
+| |_) | | |_| |    | |     | |  
+|____/   \___/     |_|     |_|  
+    ____________________________________________________________
+     Hello! I'm Bott.
+     What can I do for you?
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Got it. I've added this task:
+       [F][ ] read sales report (for: 2h)
+     Now you have 1 tasks in the list.
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Got it. I've added this task:
+       [F][ ] call bank (for: 45m)
+     Now you have 2 tasks in the list.
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Got it. I've added this task:
+       [F][ ] deep work block (for: 1h 30m)
+     Now you have 3 tasks in the list.
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Nice! I've marked this task as done:
+       [F][X] call bank (for: 45m)
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Bye. Hope to see you again soon!
+    ____________________________________________________________
+
+```
+
+**Run B — Input:**
+```
+list
+bye
+```
+
+**Run B — Expected output:**
+```
+    ____________________________________________________________
+ ____     ___     _____   _____ 
+|  _ \   / _ \   |_   _| |_   _|
+| |_) | | | | |    | |     | |  
+|  _ <  | | | |    | |     | |  
+| |_) | | |_| |    | |     | |  
+|____/   \___/     |_|     |_|  
+    ____________________________________________________________
+     Hello! I'm Bott.
+     What can I do for you?
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Here are the tasks in your list:
+     1.[F][ ] read sales report (for: 2h)
+     2.[F][X] call bank (for: 45m)
+     3.[F][ ] deep work block (for: 1h 30m)
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Bye. Hope to see you again soon!
+    ____________________________________________________________
+
+```
+
+### TC15 — Invalid fixed-duration inputs
+
+**Aim:** A `duration` command missing its description, missing `/for`, missing the amount,
+giving a number with no unit, or giving a combined amount whose minutes exceed 59 each gets a
+specific error and adds nothing; a following valid `duration` command still works.
+
+**Input:**
+```
+duration
+duration read report
+duration read report /for
+duration read report /for 2
+duration read report /for 1h90m
+duration read report /for 2h
+list
+bye
+```
+
+**Expected output:**
+```
+    ____________________________________________________________
+ ____     ___     _____   _____ 
+|  _ \   / _ \   |_   _| |_   _|
+| |_) | | | | |    | |     | |  
+|  _ <  | | | |    | |     | |  
+| |_) | | |_| |    | |     | |  
+|____/   \___/     |_|     |_|  
+    ____________________________________________________________
+     Hello! I'm Bott.
+     What can I do for you?
+    ____________________________________________________________
+
+    ____________________________________________________________
+     OOPS!!! A fixed-duration task needs a description. Try: duration <description> /for <2h30m>
+    ____________________________________________________________
+
+    ____________________________________________________________
+     OOPS!!! A fixed-duration task needs a "/for" duration. Try: duration <description> /for <2h30m>
+    ____________________________________________________________
+
+    ____________________________________________________________
+     OOPS!!! The "for" duration of a fixed-duration task cannot be empty. Try: duration <description> /for <2h30m>
+    ____________________________________________________________
+
+    ____________________________________________________________
+     OOPS!!! "2" is not a valid duration. Use a number with a unit, e.g. 2h, 30m, or 1h30m.
+    ____________________________________________________________
+
+    ____________________________________________________________
+     OOPS!!! In a combined duration like 1h30m, the minutes must be 0-59. Try: duration <description> /for <2h30m>
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Got it. I've added this task:
+       [F][ ] read report (for: 2h)
+     Now you have 1 tasks in the list.
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Here are the tasks in your list:
+     1.[F][ ] read report (for: 2h)
     ____________________________________________________________
 
     ____________________________________________________________

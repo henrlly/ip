@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import bott.BottException;
 import bott.task.Deadline;
 import bott.task.Event;
+import bott.task.FixedDurationTask;
 import bott.task.Todo;
 
 /**
@@ -190,6 +191,94 @@ public class ParserTest {
                 () -> Parser.parseEvent("trip /from 2019-08-04 /to bad-date"));
         assertEquals("The \"to\" date must be in yyyy-MM-dd format (e.g. 2019-10-15). "
                 + "\"bad-date\" is not a valid date.", exception.getMessage());
+    }
+
+    // ---- parseFixedDuration ----
+
+    @Test
+    public void parseFixedDuration_hoursOnly_returnsTask() throws BottException {
+        FixedDurationTask task = Parser.parseFixedDuration("read sales report /for 2h");
+        assertEquals("[F][ ] read sales report (for: 2h)", task.toString());
+    }
+
+    @Test
+    public void parseFixedDuration_minutesOnly_returnsTask() throws BottException {
+        FixedDurationTask task = Parser.parseFixedDuration("call bank /for 45m");
+        assertEquals("[F][ ] call bank (for: 45m)", task.toString());
+    }
+
+    @Test
+    public void parseFixedDuration_combinedNoSpace_returnsTask() throws BottException {
+        FixedDurationTask task = Parser.parseFixedDuration("deep work /for 1h30m");
+        assertEquals("[F][ ] deep work (for: 1h 30m)", task.toString());
+    }
+
+    @Test
+    public void parseFixedDuration_combinedWithSpace_returnsTask() throws BottException {
+        FixedDurationTask task = Parser.parseFixedDuration("deep work /for 1h 30m");
+        assertEquals("[F][ ] deep work (for: 1h 30m)", task.toString());
+    }
+
+    @Test
+    public void parseFixedDuration_emptyArgs_exceptionThrown() {
+        BottException exception = assertThrows(BottException.class,
+                () -> Parser.parseFixedDuration(""));
+        assertEquals("A fixed-duration task needs a description. Try: duration <description> /for <2h30m>",
+                exception.getMessage());
+    }
+
+    @Test
+    public void parseFixedDuration_missingForMarker_exceptionThrown() {
+        BottException exception = assertThrows(BottException.class,
+                () -> Parser.parseFixedDuration("read sales report"));
+        assertEquals("A fixed-duration task needs a \"/for\" duration. "
+                + "Try: duration <description> /for <2h30m>", exception.getMessage());
+    }
+
+    @Test
+    public void parseFixedDuration_emptyDescription_exceptionThrown() {
+        BottException exception = assertThrows(BottException.class,
+                () -> Parser.parseFixedDuration("/for 2h"));
+        assertEquals("A fixed-duration task needs a description. Try: duration <description> /for <2h30m>",
+                exception.getMessage());
+    }
+
+    @Test
+    public void parseFixedDuration_emptyDuration_exceptionThrown() {
+        BottException exception = assertThrows(BottException.class,
+                () -> Parser.parseFixedDuration("read sales report /for"));
+        assertEquals("The \"for\" duration of a fixed-duration task cannot be empty. "
+                + "Try: duration <description> /for <2h30m>", exception.getMessage());
+    }
+
+    @Test
+    public void parseFixedDuration_noUnit_exceptionThrown() {
+        BottException exception = assertThrows(BottException.class,
+                () -> Parser.parseFixedDuration("read sales report /for 2"));
+        assertEquals("\"2\" is not a valid duration. Use a number with a unit, e.g. 2h, 30m, or 1h30m.",
+                exception.getMessage());
+    }
+
+    @Test
+    public void parseFixedDuration_nonNumericDuration_exceptionThrown() {
+        assertThrows(BottException.class,
+                () -> Parser.parseFixedDuration("read sales report /for a while"));
+    }
+
+    @Test
+    public void parseFixedDuration_zeroDuration_exceptionThrown() {
+        BottException exception = assertThrows(BottException.class,
+                () -> Parser.parseFixedDuration("read sales report /for 0m"));
+        assertEquals("A fixed-duration task must need more than 0 minutes. "
+                + "Try: duration <description> /for <2h30m>", exception.getMessage());
+    }
+
+    @Test
+    public void parseFixedDuration_combinedMinutesAbove59_exceptionThrown() {
+        BottException exception = assertThrows(BottException.class,
+                () -> Parser.parseFixedDuration("read sales report /for 1h90m"));
+        assertEquals("In a combined duration like 1h30m, the minutes must be 0-59. "
+                + "Try: duration <description> /for <2h30m>", exception.getMessage());
     }
 
     // ---- parseFind ----
