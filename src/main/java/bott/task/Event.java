@@ -7,8 +7,8 @@ import java.time.LocalDate;
  */
 public class Event extends Task {
 
-    protected LocalDate from;
-    protected LocalDate to;
+    private final LocalDate from;
+    private final LocalDate to;
 
     /**
      * Creates a new event task.
