@@ -3,9 +3,13 @@ package bott.parser;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import bott.BottException;
 import bott.task.Deadline;
 import bott.task.Event;
+import bott.task.FixedDurationTask;
 import bott.task.Todo;
 
 /**
@@ -15,15 +19,28 @@ import bott.task.Todo;
  */
 public class Parser {
 
-    /** Markers that separate the parts of a deadline's or event's arguments. */
+    /** Markers that separate the parts of a deadline's, event's, or fixed-duration task's arguments. */
     private static final String MARKER_BY = "/by";
     private static final String MARKER_FROM = "/from";
     private static final String MARKER_TO = "/to";
+    private static final String MARKER_FOR = "/for";
 
     /** Format reminders appended to a command's error messages. */
     private static final String USAGE_DEADLINE = "Try: deadline <description> /by <yyyy-MM-dd>";
     private static final String USAGE_EVENT =
             "Try: event <description> /from <yyyy-MM-dd> /to <yyyy-MM-dd>";
+    private static final String USAGE_DURATION = "Try: duration <description> /for <2h30m>";
+
+    /** Minutes per hour, used to convert a parsed "Xh" component into minutes. */
+    private static final int MINUTES_PER_HOUR = 60;
+
+    /**
+     * A duration of the form "Xh", "Ym", or "XhYm" (with optional space): an
+     * optional hours group, then an optional minutes group. Matching the empty
+     * string is rejected separately by {@link #parseDuration(String)}.
+     */
+    private static final Pattern DURATION_PATTERN =
+            Pattern.compile("(?:(\\d{1,4})h)?\\s*(?:(\\d{1,4})m)?", Pattern.CASE_INSENSITIVE);
 
     /**
      * Returns the command word of a line of user input, e.g. "todo" for
@@ -131,6 +148,72 @@ public class Parser {
             throw new BottException("The \"to\" end date of an event cannot be empty. " + USAGE_EVENT);
         }
         return new Event(description, parseDate("from", from), parseDate("to", to));
+    }
+
+    /**
+     * Parses the arguments of a "duration" command, of the form
+     * "{@code <description>} /for {@code <duration>}".
+     *
+     * @param args Text after the "duration" command word.
+     * @return Fixed-duration task described by {@code args}.
+     * @throws BottException If {@code args} is missing a description, the
+     *         "/for" marker, or a valid duration after it.
+     */
+    public static FixedDurationTask parseFixedDuration(String args) throws BottException {
+        if (args.isBlank()) {
+            throw new BottException("A fixed-duration task needs a description. " + USAGE_DURATION);
+        }
+        int forIndex = args.indexOf(MARKER_FOR);
+        if (forIndex == -1) {
+            throw new BottException("A fixed-duration task needs a \"/for\" duration. " + USAGE_DURATION);
+        }
+        String description = args.substring(0, forIndex).trim();
+        String duration = args.substring(forIndex + MARKER_FOR.length()).trim();
+        if (description.isEmpty()) {
+            throw new BottException("A fixed-duration task needs a description. " + USAGE_DURATION);
+        }
+        if (duration.isEmpty()) {
+            throw new BottException(
+                    "The \"for\" duration of a fixed-duration task cannot be empty. " + USAGE_DURATION);
+        }
+        return new FixedDurationTask(description, parseDuration(duration));
+    }
+
+    /**
+     * Parses a duration such as "2h", "45m", or "1h30m" into a positive
+     * number of minutes.
+     *
+     * @param value Text to parse as a duration.
+     * @return Duration in minutes.
+     * @throws BottException If {@code value} has no valid unit, if a combined
+     *         "XhYm" form has a minutes component above 59, or if the total
+     *         is not positive.
+     */
+    private static int parseDuration(String value) throws BottException {
+        Matcher matcher = DURATION_PATTERN.matcher(value);
+        boolean matched = matcher.matches();
+        String hoursText = matched ? matcher.group(1) : null;
+        String minutesText = matched ? matcher.group(2) : null;
+        if (hoursText == null && minutesText == null) {
+            throw new BottException(
+                    "\"" + value + "\" is not a valid duration. "
+                            + "Use a number with a unit, e.g. 2h, 30m, or 1h30m.");
+        }
+
+        int hours = hoursText == null ? 0 : Integer.parseInt(hoursText);
+        int minutes = minutesText == null ? 0 : Integer.parseInt(minutesText);
+        boolean isCombinedForm = hoursText != null && minutesText != null;
+        if (isCombinedForm && minutes >= MINUTES_PER_HOUR) {
+            throw new BottException(
+                    "In a combined duration like 1h30m, the minutes must be 0-59. " + USAGE_DURATION);
+        }
+
+        int totalMinutes = hours * MINUTES_PER_HOUR + minutes;
+        if (totalMinutes <= 0) {
+            throw new BottException(
+                    "A fixed-duration task must need more than 0 minutes. " + USAGE_DURATION);
+        }
+        return totalMinutes;
     }
 
     /**

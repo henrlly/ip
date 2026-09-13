@@ -14,6 +14,7 @@ import java.util.Scanner;
 import bott.BottException;
 import bott.task.Deadline;
 import bott.task.Event;
+import bott.task.FixedDurationTask;
 import bott.task.Task;
 import bott.task.Todo;
 
@@ -74,8 +75,9 @@ public class Storage {
 
     /**
      * Parses one line of the save file into a task. Expected formats:
-     * "T | 1 | desc", "D | 1 | desc | by", and "E | 1 | desc | from | to",
-     * where the second field is "1" if the task is done, or "0" otherwise.
+     * "T | 1 | desc", "D | 1 | desc | by", "E | 1 | desc | from | to", and
+     * "F | 1 | desc | minutes", where the second field is "1" if the task is
+     * done, or "0" otherwise.
      *
      * @param line Line read from the save file.
      * @return Task described by {@code line}, or {@code null} if the line
@@ -94,6 +96,9 @@ public class Storage {
                     break;
                 case "E":
                     task = new Event(fields[2], LocalDate.parse(fields[3]), LocalDate.parse(fields[4]));
+                    break;
+                case "F":
+                    task = new FixedDurationTask(fields[2], Integer.parseInt(fields[3]));
                     break;
                 default:
                     throw new IllegalArgumentException("Unknown task type: " + fields[0]);
