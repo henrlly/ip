@@ -24,14 +24,13 @@ public class Ui {
     private static final String HORIZONTAL_LINE =
             INDENT + "____________________________________________________________";
 
-    /** Startup banner spelling out "BOTT", printed once above the greeting. */
+    /** Startup banner spelling out "SARGE", printed once above the greeting. */
     private static final String BANNER =
-            " ____     ___     _____   _____ \n"
-            + "|  _ \\   / _ \\   |_   _| |_   _|\n"
-            + "| |_) | | | | |    | |     | |  \n"
-            + "|  _ <  | | | |    | |     | |  \n"
-            + "| |_) | | |_| |    | |     | |  \n"
-            + "|____/   \\___/     |_|     |_|  \n";
+            " ____        _       _____      ____    _____ \n"
+            + "/ ___|      / \\     |  __ \\    / ___|  |  ___|\n"
+            + "\\___ \\     / _ \\    | |__) |  | |  _   | |__  \n"
+            + " ___) |   / ___ \\   |  _  /   | |_| |  |  __| \n"
+            + "|____/   /_/   \\_\\  |_|  \\_\\   \\____|  |_____|\n";
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -81,23 +80,23 @@ public class Ui {
         System.out.println();
     }
 
-    /** Returns Bott's greeting. */
+    /** Returns Sergeant Bott's greeting. */
     public String getWelcomeMessage() {
-        return "Hello! I'm Bott.\nWhat can I do for you?";
+        return "Ten-hut! Sergeant Bott reporting for duty.\nWhat's your first order, recruit?";
     }
 
-    /** Returns Bott's farewell message. */
+    /** Returns Sergeant Bott's farewell message. */
     public String getGoodbyeMessage() {
-        return "Bye. Hope to see you again soon!";
+        return "Dismissed! Fall out, recruit.";
     }
 
     /**
-     * Returns an error message prefixed with "OOPS!!!".
+     * Returns an error message prefixed with "NEGATIVE, RECRUIT!".
      *
      * @param message Description of what went wrong.
      */
     public String getErrorMessage(String message) {
-        return "OOPS!!! " + message;
+        return "NEGATIVE, RECRUIT! " + message;
     }
 
     /**
@@ -106,7 +105,7 @@ public class Ui {
      * @param tasks Tasks stored so far.
      */
     public String getTaskListMessage(List<Task> tasks) {
-        return numberedTasks("Here are the tasks in your list:", tasks);
+        return numberedTasks("Roll call! Here's your mission roster:", tasks);
     }
 
     /**
@@ -115,7 +114,7 @@ public class Ui {
      * @param matches Tasks whose description matched the keyword, in list order.
      */
     public String getMatchingTasksMessage(List<Task> matches) {
-        return numberedTasks("Here are the matching tasks in your list:", matches);
+        return numberedTasks("Found these missions matching your intel:", matches);
     }
 
     /**
@@ -125,7 +124,7 @@ public class Ui {
      * @param taskCount Total number of tasks now stored.
      */
     public String getTaskAddedMessage(Task task, int taskCount) {
-        return taskCountMessage("Got it. I've added this task:", task, taskCount);
+        return taskCountMessage("Mission logged, recruit! Fall in:", task, taskCount);
     }
 
     /**
@@ -135,7 +134,7 @@ public class Ui {
      * @param taskCount Total number of tasks remaining.
      */
     public String getTaskDeletedMessage(Task task, int taskCount) {
-        return taskCountMessage("Noted. I've removed this task:", task, taskCount);
+        return taskCountMessage("Mission scrubbed, recruit! Fall out:", task, taskCount);
     }
 
     /**
@@ -144,7 +143,7 @@ public class Ui {
      * @param task Task that was marked as done.
      */
     public String getTaskMarkedMessage(Task task) {
-        return "Nice! I've marked this task as done:\n  " + task;
+        return "Outstanding! Mission accomplished:\n  " + task;
     }
 
     /**
@@ -153,7 +152,7 @@ public class Ui {
      * @param task Task that was marked as not done.
      */
     public String getTaskUnmarkedMessage(Task task) {
-        return "OK, I've marked this task as not done yet:\n  " + task;
+        return "At ease. Mission's back on the roster:\n  " + task;
     }
 
     /**
@@ -169,12 +168,12 @@ public class Ui {
         return String.join("\n",
                 headline,
                 "  " + task,
-                "Now you have " + taskCount + " tasks in the list.");
+                "You now have " + taskCount + " mission(s) on the roster.");
     }
 
     /**
      * Returns a header line followed by one numbered line per task, e.g.
-     * "Here are the tasks in your list:\n1.[T][ ] read book".
+     * "Roll call! Here's your mission roster:\n1.[T][ ] read book".
      */
     private String numberedTasks(String header, List<Task> tasks) {
         StringBuilder message = new StringBuilder(header);

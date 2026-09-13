@@ -27,19 +27,18 @@ bye
 **Expected output:**
 ```
     ____________________________________________________________
- ____     ___     _____   _____ 
-|  _ \   / _ \   |_   _| |_   _|
-| |_) | | | | |    | |     | |  
-|  _ <  | | | |    | |     | |  
-| |_) | | |_| |    | |     | |  
-|____/   \___/     |_|     |_|  
+ ____        _       _____      ____    _____ 
+/ ___|      / \     |  __ \    / ___|  |  ___|
+\___ \     / _ \    | |__) |  | |  _   | |__  
+ ___) |   / ___ \   |  _  /   | |_| |  |  __| 
+|____/   /_/   \_\  |_|  \_\   \____|  |_____|
     ____________________________________________________________
-     Hello! I'm Bott.
-     What can I do for you?
+     Ten-hut! Sergeant Bott reporting for duty.
+     What's your first order, recruit?
     ____________________________________________________________
 
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Dismissed! Fall out, recruit.
     ____________________________________________________________
 
 ```
@@ -59,30 +58,29 @@ bye
 **Expected output:**
 ```
     ____________________________________________________________
- ____     ___     _____   _____ 
-|  _ \   / _ \   |_   _| |_   _|
-| |_) | | | | |    | |     | |  
-|  _ <  | | | |    | |     | |  
-| |_) | | |_| |    | |     | |  
-|____/   \___/     |_|     |_|  
+ ____        _       _____      ____    _____ 
+/ ___|      / \     |  __ \    / ___|  |  ___|
+\___ \     / _ \    | |__) |  | |  _   | |__  
+ ___) |   / ___ \   |  _  /   | |_| |  |  __| 
+|____/   /_/   \_\  |_|  \_\   \____|  |_____|
     ____________________________________________________________
-     Hello! I'm Bott.
-     What can I do for you?
+     Ten-hut! Sergeant Bott reporting for duty.
+     What's your first order, recruit?
     ____________________________________________________________
 
     ____________________________________________________________
-     Got it. I've added this task:
+     Mission logged, recruit! Fall in:
        [T][ ] borrow book
-     Now you have 1 tasks in the list.
+     You now have 1 mission(s) on the roster.
     ____________________________________________________________
 
     ____________________________________________________________
-     Here are the tasks in your list:
+     Roll call! Here's your mission roster:
      1.[T][ ] borrow book
     ____________________________________________________________
 
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Dismissed! Fall out, recruit.
     ____________________________________________________________
 
 ```
@@ -102,25 +100,24 @@ bye
 **Expected output:**
 ```
     ____________________________________________________________
- ____     ___     _____   _____ 
-|  _ \   / _ \   |_   _| |_   _|
-| |_) | | | | |    | |     | |  
-|  _ <  | | | |    | |     | |  
-| |_) | | |_| |    | |     | |  
-|____/   \___/     |_|     |_|  
+ ____        _       _____      ____    _____ 
+/ ___|      / \     |  __ \    / ___|  |  ___|
+\___ \     / _ \    | |__) |  | |  _   | |__  
+ ___) |   / ___ \   |  _  /   | |_| |  |  __| 
+|____/   /_/   \_\  |_|  \_\   \____|  |_____|
     ____________________________________________________________
-     Hello! I'm Bott.
-     What can I do for you?
+     Ten-hut! Sergeant Bott reporting for duty.
+     What's your first order, recruit?
     ____________________________________________________________
 
     ____________________________________________________________
-     Got it. I've added this task:
+     Mission logged, recruit! Fall in:
        [D][ ] return book (by: Oct 15 2019)
-     Now you have 1 tasks in the list.
+     You now have 1 mission(s) on the roster.
     ____________________________________________________________
 
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Dismissed! Fall out, recruit.
     ____________________________________________________________
 
 ```
@@ -140,25 +137,24 @@ bye
 **Expected output:**
 ```
     ____________________________________________________________
- ____     ___     _____   _____ 
-|  _ \   / _ \   |_   _| |_   _|
-| |_) | | | | |    | |     | |  
-|  _ <  | | | |    | |     | |  
-| |_) | | |_| |    | |     | |  
-|____/   \___/     |_|     |_|  
+ ____        _       _____      ____    _____ 
+/ ___|      / \     |  __ \    / ___|  |  ___|
+\___ \     / _ \    | |__) |  | |  _   | |__  
+ ___) |   / ___ \   |  _  /   | |_| |  |  __| 
+|____/   /_/   \_\  |_|  \_\   \____|  |_____|
     ____________________________________________________________
-     Hello! I'm Bott.
-     What can I do for you?
+     Ten-hut! Sergeant Bott reporting for duty.
+     What's your first order, recruit?
     ____________________________________________________________
 
     ____________________________________________________________
-     Got it. I've added this task:
+     Mission logged, recruit! Fall in:
        [E][ ] project meeting (from: Aug 06 2019 to: Aug 07 2019)
-     Now you have 1 tasks in the list.
+     You now have 1 mission(s) on the roster.
     ____________________________________________________________
 
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Dismissed! Fall out, recruit.
     ____________________________________________________________
 
 ```
@@ -181,45 +177,44 @@ bye
 **Expected output:**
 ```
     ____________________________________________________________
- ____     ___     _____   _____ 
-|  _ \   / _ \   |_   _| |_   _|
-| |_) | | | | |    | |     | |  
-|  _ <  | | | |    | |     | |  
-| |_) | | |_| |    | |     | |  
-|____/   \___/     |_|     |_|  
+ ____        _       _____      ____    _____ 
+/ ___|      / \     |  __ \    / ___|  |  ___|
+\___ \     / _ \    | |__) |  | |  _   | |__  
+ ___) |   / ___ \   |  _  /   | |_| |  |  __| 
+|____/   /_/   \_\  |_|  \_\   \____|  |_____|
     ____________________________________________________________
-     Hello! I'm Bott.
-     What can I do for you?
+     Ten-hut! Sergeant Bott reporting for duty.
+     What's your first order, recruit?
     ____________________________________________________________
 
     ____________________________________________________________
-     Got it. I've added this task:
+     Mission logged, recruit! Fall in:
        [T][ ] read book
-     Now you have 1 tasks in the list.
+     You now have 1 mission(s) on the roster.
     ____________________________________________________________
 
     ____________________________________________________________
-     Nice! I've marked this task as done:
+     Outstanding! Mission accomplished:
        [T][X] read book
     ____________________________________________________________
 
     ____________________________________________________________
-     Here are the tasks in your list:
+     Roll call! Here's your mission roster:
      1.[T][X] read book
     ____________________________________________________________
 
     ____________________________________________________________
-     OK, I've marked this task as not done yet:
+     At ease. Mission's back on the roster:
        [T][ ] read book
     ____________________________________________________________
 
     ____________________________________________________________
-     Here are the tasks in your list:
+     Roll call! Here's your mission roster:
      1.[T][ ] read book
     ____________________________________________________________
 
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Dismissed! Fall out, recruit.
     ____________________________________________________________
 
 ```
@@ -245,53 +240,52 @@ bye
 **Expected output:**
 ```
     ____________________________________________________________
- ____     ___     _____   _____ 
-|  _ \   / _ \   |_   _| |_   _|
-| |_) | | | | |    | |     | |  
-|  _ <  | | | |    | |     | |  
-| |_) | | |_| |    | |     | |  
-|____/   \___/     |_|     |_|  
+ ____        _       _____      ____    _____ 
+/ ___|      / \     |  __ \    / ___|  |  ___|
+\___ \     / _ \    | |__) |  | |  _   | |__  
+ ___) |   / ___ \   |  _  /   | |_| |  |  __| 
+|____/   /_/   \_\  |_|  \_\   \____|  |_____|
     ____________________________________________________________
-     Hello! I'm Bott.
-     What can I do for you?
+     Ten-hut! Sergeant Bott reporting for duty.
+     What's your first order, recruit?
     ____________________________________________________________
 
     ____________________________________________________________
-     Got it. I've added this task:
+     Mission logged, recruit! Fall in:
        [T][ ] read book
-     Now you have 1 tasks in the list.
+     You now have 1 mission(s) on the roster.
     ____________________________________________________________
 
     ____________________________________________________________
-     Got it. I've added this task:
+     Mission logged, recruit! Fall in:
        [T][ ] return book
-     Now you have 2 tasks in the list.
+     You now have 2 mission(s) on the roster.
     ____________________________________________________________
 
     ____________________________________________________________
-     Got it. I've added this task:
+     Mission logged, recruit! Fall in:
        [D][ ] submit report (by: Oct 11 2019)
-     Now you have 3 tasks in the list.
+     You now have 3 mission(s) on the roster.
     ____________________________________________________________
 
     ____________________________________________________________
-     Got it. I've added this task:
+     Mission logged, recruit! Fall in:
        [E][ ] orientation week (from: Oct 04 2019 to: Oct 11 2019)
-     Now you have 4 tasks in the list.
+     You now have 4 mission(s) on the roster.
     ____________________________________________________________
 
     ____________________________________________________________
-     Nice! I've marked this task as done:
+     Outstanding! Mission accomplished:
        [T][X] read book
     ____________________________________________________________
 
     ____________________________________________________________
-     Nice! I've marked this task as done:
+     Outstanding! Mission accomplished:
        [D][X] submit report (by: Oct 11 2019)
     ____________________________________________________________
 
     ____________________________________________________________
-     Here are the tasks in your list:
+     Roll call! Here's your mission roster:
      1.[T][X] read book
      2.[T][ ] return book
      3.[D][X] submit report (by: Oct 11 2019)
@@ -299,7 +293,7 @@ bye
     ____________________________________________________________
 
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Dismissed! Fall out, recruit.
     ____________________________________________________________
 
 ```
@@ -307,7 +301,7 @@ bye
 ### TC7 — Empty todo description and unknown command
 
 **Aim:** The two minimal required errors: `todo` with no description, and a command Bott doesn't
-recognize, each produce a specific "OOPS!!!" message rather than crashing or being silently ignored.
+recognize, each produce a specific "NEGATIVE, RECRUIT!" message rather than crashing or being silently ignored.
 
 **Input:**
 ```
@@ -319,27 +313,26 @@ bye
 **Expected output:**
 ```
     ____________________________________________________________
- ____     ___     _____   _____ 
-|  _ \   / _ \   |_   _| |_   _|
-| |_) | | | | |    | |     | |  
-|  _ <  | | | |    | |     | |  
-| |_) | | |_| |    | |     | |  
-|____/   \___/     |_|     |_|  
+ ____        _       _____      ____    _____ 
+/ ___|      / \     |  __ \    / ___|  |  ___|
+\___ \     / _ \    | |__) |  | |  _   | |__  
+ ___) |   / ___ \   |  _  /   | |_| |  |  __| 
+|____/   /_/   \_\  |_|  \_\   \____|  |_____|
     ____________________________________________________________
-     Hello! I'm Bott.
-     What can I do for you?
-    ____________________________________________________________
-
-    ____________________________________________________________
-     OOPS!!! A todo needs a description. Try: todo <description>
+     Ten-hut! Sergeant Bott reporting for duty.
+     What's your first order, recruit?
     ____________________________________________________________
 
     ____________________________________________________________
-     OOPS!!! I don't recognize "blah" as a command. Try: list, todo, deadline, event, duration, find, mark, unmark, delete, or bye.
+     NEGATIVE, RECRUIT! A todo needs a description. Try: todo <description>
     ____________________________________________________________
 
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     NEGATIVE, RECRUIT! That's not an order I recognize: "blah". Try: list, todo, deadline, event, duration, find, mark, unmark, delete, or bye.
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Dismissed! Fall out, recruit.
     ____________________________________________________________
 
 ```
@@ -361,31 +354,30 @@ bye
 **Expected output:**
 ```
     ____________________________________________________________
- ____     ___     _____   _____ 
-|  _ \   / _ \   |_   _| |_   _|
-| |_) | | | | |    | |     | |  
-|  _ <  | | | |    | |     | |  
-| |_) | | |_| |    | |     | |  
-|____/   \___/     |_|     |_|  
+ ____        _       _____      ____    _____ 
+/ ___|      / \     |  __ \    / ___|  |  ___|
+\___ \     / _ \    | |__) |  | |  _   | |__  
+ ___) |   / ___ \   |  _  /   | |_| |  |  __| 
+|____/   /_/   \_\  |_|  \_\   \____|  |_____|
     ____________________________________________________________
-     Hello! I'm Bott.
-     What can I do for you?
-    ____________________________________________________________
-
-    ____________________________________________________________
-     OOPS!!! There is no task number 1 in your list. You currently have 0 task(s).
+     Ten-hut! Sergeant Bott reporting for duty.
+     What's your first order, recruit?
     ____________________________________________________________
 
     ____________________________________________________________
-     OOPS!!! A deadline needs a "/by" date. Try: deadline <description> /by <yyyy-MM-dd>
+     NEGATIVE, RECRUIT! There is no task number 1 in your list. You currently have 0 task(s).
     ____________________________________________________________
 
     ____________________________________________________________
-     OOPS!!! An event needs a "/to" end date after its "/from" start date. Try: event <description> /from <yyyy-MM-dd> /to <yyyy-MM-dd>
+     NEGATIVE, RECRUIT! A deadline needs a "/by" date. Try: deadline <description> /by <yyyy-MM-dd>
     ____________________________________________________________
 
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     NEGATIVE, RECRUIT! An event needs a "/to" end date after its "/from" start date. Try: event <description> /from <yyyy-MM-dd> /to <yyyy-MM-dd>
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Dismissed! Fall out, recruit.
     ____________________________________________________________
 
 ```
@@ -417,64 +409,63 @@ bye
 **Expected output:**
 ```
     ____________________________________________________________
- ____     ___     _____   _____ 
-|  _ \   / _ \   |_   _| |_   _|
-| |_) | | | | |    | |     | |  
-|  _ <  | | | |    | |     | |  
-| |_) | | |_| |    | |     | |  
-|____/   \___/     |_|     |_|  
+ ____        _       _____      ____    _____ 
+/ ___|      / \     |  __ \    / ___|  |  ___|
+\___ \     / _ \    | |__) |  | |  _   | |__  
+ ___) |   / ___ \   |  _  /   | |_| |  |  __| 
+|____/   /_/   \_\  |_|  \_\   \____|  |_____|
     ____________________________________________________________
-     Hello! I'm Bott.
-     What can I do for you?
+     Ten-hut! Sergeant Bott reporting for duty.
+     What's your first order, recruit?
     ____________________________________________________________
 
     ____________________________________________________________
-     Got it. I've added this task:
+     Mission logged, recruit! Fall in:
        [T][ ] read book
-     Now you have 1 tasks in the list.
+     You now have 1 mission(s) on the roster.
     ____________________________________________________________
 
     ____________________________________________________________
-     Got it. I've added this task:
+     Mission logged, recruit! Fall in:
        [D][ ] return book (by: Jun 06 2019)
-     Now you have 2 tasks in the list.
+     You now have 2 mission(s) on the roster.
     ____________________________________________________________
 
     ____________________________________________________________
-     Got it. I've added this task:
+     Mission logged, recruit! Fall in:
        [E][ ] project meeting (from: Aug 06 2019 to: Aug 06 2019)
-     Now you have 3 tasks in the list.
+     You now have 3 mission(s) on the roster.
     ____________________________________________________________
 
     ____________________________________________________________
-     Got it. I've added this task:
+     Mission logged, recruit! Fall in:
        [T][ ] join sports club
-     Now you have 4 tasks in the list.
+     You now have 4 mission(s) on the roster.
     ____________________________________________________________
 
     ____________________________________________________________
-     Got it. I've added this task:
+     Mission logged, recruit! Fall in:
        [T][ ] borrow book
-     Now you have 5 tasks in the list.
+     You now have 5 mission(s) on the roster.
     ____________________________________________________________
 
     ____________________________________________________________
-     Nice! I've marked this task as done:
+     Outstanding! Mission accomplished:
        [T][X] read book
     ____________________________________________________________
 
     ____________________________________________________________
-     Nice! I've marked this task as done:
+     Outstanding! Mission accomplished:
        [D][X] return book (by: Jun 06 2019)
     ____________________________________________________________
 
     ____________________________________________________________
-     Nice! I've marked this task as done:
+     Outstanding! Mission accomplished:
        [T][X] join sports club
     ____________________________________________________________
 
     ____________________________________________________________
-     Here are the tasks in your list:
+     Roll call! Here's your mission roster:
      1.[T][X] read book
      2.[D][X] return book (by: Jun 06 2019)
      3.[E][ ] project meeting (from: Aug 06 2019 to: Aug 06 2019)
@@ -483,13 +474,13 @@ bye
     ____________________________________________________________
 
     ____________________________________________________________
-     Noted. I've removed this task:
+     Mission scrubbed, recruit! Fall out:
        [E][ ] project meeting (from: Aug 06 2019 to: Aug 06 2019)
-     Now you have 4 tasks in the list.
+     You now have 4 mission(s) on the roster.
     ____________________________________________________________
 
     ____________________________________________________________
-     Here are the tasks in your list:
+     Roll call! Here's your mission roster:
      1.[T][X] read book
      2.[D][X] return book (by: Jun 06 2019)
      3.[T][X] join sports club
@@ -497,20 +488,20 @@ bye
     ____________________________________________________________
 
     ____________________________________________________________
-     Noted. I've removed this task:
+     Mission scrubbed, recruit! Fall out:
        [T][X] read book
-     Now you have 3 tasks in the list.
+     You now have 3 mission(s) on the roster.
     ____________________________________________________________
 
     ____________________________________________________________
-     Here are the tasks in your list:
+     Roll call! Here's your mission roster:
      1.[D][X] return book (by: Jun 06 2019)
      2.[T][X] join sports club
      3.[T][ ] borrow book
     ____________________________________________________________
 
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Dismissed! Fall out, recruit.
     ____________________________________________________________
 
 ```
@@ -532,31 +523,30 @@ bye
 **Expected output:**
 ```
     ____________________________________________________________
- ____     ___     _____   _____ 
-|  _ \   / _ \   |_   _| |_   _|
-| |_) | | | | |    | |     | |  
-|  _ <  | | | |    | |     | |  
-| |_) | | |_| |    | |     | |  
-|____/   \___/     |_|     |_|  
+ ____        _       _____      ____    _____ 
+/ ___|      / \     |  __ \    / ___|  |  ___|
+\___ \     / _ \    | |__) |  | |  _   | |__  
+ ___) |   / ___ \   |  _  /   | |_| |  |  __| 
+|____/   /_/   \_\  |_|  \_\   \____|  |_____|
     ____________________________________________________________
-     Hello! I'm Bott.
-     What can I do for you?
-    ____________________________________________________________
-
-    ____________________________________________________________
-     OOPS!!! Please specify a task number. Try: delete <task number>
+     Ten-hut! Sergeant Bott reporting for duty.
+     What's your first order, recruit?
     ____________________________________________________________
 
     ____________________________________________________________
-     OOPS!!! "abc" is not a valid task number. Try: delete <task number>
+     NEGATIVE, RECRUIT! Please specify a task number. Try: delete <task number>
     ____________________________________________________________
 
     ____________________________________________________________
-     OOPS!!! There is no task number 1 in your list. You currently have 0 task(s).
+     NEGATIVE, RECRUIT! "abc" is not a valid task number. Try: delete <task number>
     ____________________________________________________________
 
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     NEGATIVE, RECRUIT! There is no task number 1 in your list. You currently have 0 task(s).
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Dismissed! Fall out, recruit.
     ____________________________________________________________
 
 ```
@@ -578,36 +568,35 @@ bye
 **Run A — Expected output:**
 ```
     ____________________________________________________________
- ____     ___     _____   _____ 
-|  _ \   / _ \   |_   _| |_   _|
-| |_) | | | | |    | |     | |  
-|  _ <  | | | |    | |     | |  
-| |_) | | |_| |    | |     | |  
-|____/   \___/     |_|     |_|  
+ ____        _       _____      ____    _____ 
+/ ___|      / \     |  __ \    / ___|  |  ___|
+\___ \     / _ \    | |__) |  | |  _   | |__  
+ ___) |   / ___ \   |  _  /   | |_| |  |  __| 
+|____/   /_/   \_\  |_|  \_\   \____|  |_____|
     ____________________________________________________________
-     Hello! I'm Bott.
-     What can I do for you?
+     Ten-hut! Sergeant Bott reporting for duty.
+     What's your first order, recruit?
     ____________________________________________________________
 
     ____________________________________________________________
-     Got it. I've added this task:
+     Mission logged, recruit! Fall in:
        [T][ ] read book
-     Now you have 1 tasks in the list.
+     You now have 1 mission(s) on the roster.
     ____________________________________________________________
 
     ____________________________________________________________
-     Got it. I've added this task:
+     Mission logged, recruit! Fall in:
        [D][ ] return book (by: Jun 06 2019)
-     Now you have 2 tasks in the list.
+     You now have 2 mission(s) on the roster.
     ____________________________________________________________
 
     ____________________________________________________________
-     Nice! I've marked this task as done:
+     Outstanding! Mission accomplished:
        [T][X] read book
     ____________________________________________________________
 
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Dismissed! Fall out, recruit.
     ____________________________________________________________
 
 ```
@@ -621,25 +610,24 @@ bye
 **Run B — Expected output:**
 ```
     ____________________________________________________________
- ____     ___     _____   _____ 
-|  _ \   / _ \   |_   _| |_   _|
-| |_) | | | | |    | |     | |  
-|  _ <  | | | |    | |     | |  
-| |_) | | |_| |    | |     | |  
-|____/   \___/     |_|     |_|  
+ ____        _       _____      ____    _____ 
+/ ___|      / \     |  __ \    / ___|  |  ___|
+\___ \     / _ \    | |__) |  | |  _   | |__  
+ ___) |   / ___ \   |  _  /   | |_| |  |  __| 
+|____/   /_/   \_\  |_|  \_\   \____|  |_____|
     ____________________________________________________________
-     Hello! I'm Bott.
-     What can I do for you?
+     Ten-hut! Sergeant Bott reporting for duty.
+     What's your first order, recruit?
     ____________________________________________________________
 
     ____________________________________________________________
-     Here are the tasks in your list:
+     Roll call! Here's your mission roster:
      1.[T][X] read book
      2.[D][ ] return book (by: Jun 06 2019)
     ____________________________________________________________
 
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Dismissed! Fall out, recruit.
     ____________________________________________________________
 
 ```
@@ -663,42 +651,41 @@ bye
 **Expected output:**
 ```
     ____________________________________________________________
- ____     ___     _____   _____ 
-|  _ \   / _ \   |_   _| |_   _|
-| |_) | | | | |    | |     | |  
-|  _ <  | | | |    | |     | |  
-| |_) | | |_| |    | |     | |  
-|____/   \___/     |_|     |_|  
+ ____        _       _____      ____    _____ 
+/ ___|      / \     |  __ \    / ___|  |  ___|
+\___ \     / _ \    | |__) |  | |  _   | |__  
+ ___) |   / ___ \   |  _  /   | |_| |  |  __| 
+|____/   /_/   \_\  |_|  \_\   \____|  |_____|
     ____________________________________________________________
-     Hello! I'm Bott.
-     What can I do for you?
-    ____________________________________________________________
-
-    ____________________________________________________________
-     OOPS!!! The "by" date must be in yyyy-MM-dd format (e.g. 2019-10-15). "15/10/2019" is not a valid date.
+     Ten-hut! Sergeant Bott reporting for duty.
+     What's your first order, recruit?
     ____________________________________________________________
 
     ____________________________________________________________
-     OOPS!!! The "to" date must be in yyyy-MM-dd format (e.g. 2019-10-15). "not-a-date" is not a valid date.
+     NEGATIVE, RECRUIT! The "by" date must be in yyyy-MM-dd format (e.g. 2019-10-15). "15/10/2019" is not a valid date.
     ____________________________________________________________
 
     ____________________________________________________________
-     OOPS!!! The "by" date must be in yyyy-MM-dd format (e.g. 2019-10-15). "2021-02-29" is not a valid date.
+     NEGATIVE, RECRUIT! The "to" date must be in yyyy-MM-dd format (e.g. 2019-10-15). "not-a-date" is not a valid date.
     ____________________________________________________________
 
     ____________________________________________________________
-     Got it. I've added this task:
+     NEGATIVE, RECRUIT! The "by" date must be in yyyy-MM-dd format (e.g. 2019-10-15). "2021-02-29" is not a valid date.
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Mission logged, recruit! Fall in:
        [T][ ] valid task
-     Now you have 1 tasks in the list.
+     You now have 1 mission(s) on the roster.
     ____________________________________________________________
 
     ____________________________________________________________
-     Here are the tasks in your list:
+     Roll call! Here's your mission roster:
      1.[T][ ] valid task
     ____________________________________________________________
 
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Dismissed! Fall out, recruit.
     ____________________________________________________________
 
 ```
@@ -728,74 +715,73 @@ bye
 **Expected output:**
 ```
     ____________________________________________________________
- ____     ___     _____   _____ 
-|  _ \   / _ \   |_   _| |_   _|
-| |_) | | | | |    | |     | |  
-|  _ <  | | | |    | |     | |  
-| |_) | | |_| |    | |     | |  
-|____/   \___/     |_|     |_|  
+ ____        _       _____      ____    _____ 
+/ ___|      / \     |  __ \    / ___|  |  ___|
+\___ \     / _ \    | |__) |  | |  _   | |__  
+ ___) |   / ___ \   |  _  /   | |_| |  |  __| 
+|____/   /_/   \_\  |_|  \_\   \____|  |_____|
     ____________________________________________________________
-     Hello! I'm Bott.
-     What can I do for you?
+     Ten-hut! Sergeant Bott reporting for duty.
+     What's your first order, recruit?
     ____________________________________________________________
 
     ____________________________________________________________
-     Got it. I've added this task:
+     Mission logged, recruit! Fall in:
        [T][ ] read book
-     Now you have 1 tasks in the list.
+     You now have 1 mission(s) on the roster.
     ____________________________________________________________
 
     ____________________________________________________________
-     Got it. I've added this task:
+     Mission logged, recruit! Fall in:
        [D][ ] return book (by: Jun 06 2019)
-     Now you have 2 tasks in the list.
+     You now have 2 mission(s) on the roster.
     ____________________________________________________________
 
     ____________________________________________________________
-     Got it. I've added this task:
+     Mission logged, recruit! Fall in:
        [T][ ] join sports club
-     Now you have 3 tasks in the list.
+     You now have 3 mission(s) on the roster.
     ____________________________________________________________
 
     ____________________________________________________________
-     Nice! I've marked this task as done:
+     Outstanding! Mission accomplished:
        [T][X] read book
     ____________________________________________________________
 
     ____________________________________________________________
-     Nice! I've marked this task as done:
+     Outstanding! Mission accomplished:
        [D][X] return book (by: Jun 06 2019)
     ____________________________________________________________
 
     ____________________________________________________________
-     Here are the matching tasks in your list:
+     Found these missions matching your intel:
      1.[T][X] read book
      2.[D][X] return book (by: Jun 06 2019)
     ____________________________________________________________
 
     ____________________________________________________________
-     Here are the matching tasks in your list:
+     Found these missions matching your intel:
      1.[T][X] read book
      2.[D][X] return book (by: Jun 06 2019)
     ____________________________________________________________
 
     ____________________________________________________________
-     Here are the matching tasks in your list:
+     Found these missions matching your intel:
     ____________________________________________________________
 
     ____________________________________________________________
-     OOPS!!! Please specify a keyword to search for. Try: find <keyword>
+     NEGATIVE, RECRUIT! Please specify a keyword to search for. Try: find <keyword>
     ____________________________________________________________
 
     ____________________________________________________________
-     Here are the tasks in your list:
+     Roll call! Here's your mission roster:
      1.[T][X] read book
      2.[D][X] return book (by: Jun 06 2019)
      3.[T][ ] join sports club
     ____________________________________________________________
 
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Dismissed! Fall out, recruit.
     ____________________________________________________________
 
 ```
@@ -820,42 +806,41 @@ bye
 **Run A — Expected output:**
 ```
     ____________________________________________________________
- ____     ___     _____   _____ 
-|  _ \   / _ \   |_   _| |_   _|
-| |_) | | | | |    | |     | |  
-|  _ <  | | | |    | |     | |  
-| |_) | | |_| |    | |     | |  
-|____/   \___/     |_|     |_|  
+ ____        _       _____      ____    _____ 
+/ ___|      / \     |  __ \    / ___|  |  ___|
+\___ \     / _ \    | |__) |  | |  _   | |__  
+ ___) |   / ___ \   |  _  /   | |_| |  |  __| 
+|____/   /_/   \_\  |_|  \_\   \____|  |_____|
     ____________________________________________________________
-     Hello! I'm Bott.
-     What can I do for you?
+     Ten-hut! Sergeant Bott reporting for duty.
+     What's your first order, recruit?
     ____________________________________________________________
 
     ____________________________________________________________
-     Got it. I've added this task:
+     Mission logged, recruit! Fall in:
        [F][ ] read sales report (for: 2h)
-     Now you have 1 tasks in the list.
+     You now have 1 mission(s) on the roster.
     ____________________________________________________________
 
     ____________________________________________________________
-     Got it. I've added this task:
+     Mission logged, recruit! Fall in:
        [F][ ] call bank (for: 45m)
-     Now you have 2 tasks in the list.
+     You now have 2 mission(s) on the roster.
     ____________________________________________________________
 
     ____________________________________________________________
-     Got it. I've added this task:
+     Mission logged, recruit! Fall in:
        [F][ ] deep work block (for: 1h 30m)
-     Now you have 3 tasks in the list.
+     You now have 3 mission(s) on the roster.
     ____________________________________________________________
 
     ____________________________________________________________
-     Nice! I've marked this task as done:
+     Outstanding! Mission accomplished:
        [F][X] call bank (for: 45m)
     ____________________________________________________________
 
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Dismissed! Fall out, recruit.
     ____________________________________________________________
 
 ```
@@ -869,26 +854,25 @@ bye
 **Run B — Expected output:**
 ```
     ____________________________________________________________
- ____     ___     _____   _____ 
-|  _ \   / _ \   |_   _| |_   _|
-| |_) | | | | |    | |     | |  
-|  _ <  | | | |    | |     | |  
-| |_) | | |_| |    | |     | |  
-|____/   \___/     |_|     |_|  
+ ____        _       _____      ____    _____ 
+/ ___|      / \     |  __ \    / ___|  |  ___|
+\___ \     / _ \    | |__) |  | |  _   | |__  
+ ___) |   / ___ \   |  _  /   | |_| |  |  __| 
+|____/   /_/   \_\  |_|  \_\   \____|  |_____|
     ____________________________________________________________
-     Hello! I'm Bott.
-     What can I do for you?
+     Ten-hut! Sergeant Bott reporting for duty.
+     What's your first order, recruit?
     ____________________________________________________________
 
     ____________________________________________________________
-     Here are the tasks in your list:
+     Roll call! Here's your mission roster:
      1.[F][ ] read sales report (for: 2h)
      2.[F][X] call bank (for: 45m)
      3.[F][ ] deep work block (for: 1h 30m)
     ____________________________________________________________
 
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Dismissed! Fall out, recruit.
     ____________________________________________________________
 
 ```
@@ -914,50 +898,49 @@ bye
 **Expected output:**
 ```
     ____________________________________________________________
- ____     ___     _____   _____ 
-|  _ \   / _ \   |_   _| |_   _|
-| |_) | | | | |    | |     | |  
-|  _ <  | | | |    | |     | |  
-| |_) | | |_| |    | |     | |  
-|____/   \___/     |_|     |_|  
+ ____        _       _____      ____    _____ 
+/ ___|      / \     |  __ \    / ___|  |  ___|
+\___ \     / _ \    | |__) |  | |  _   | |__  
+ ___) |   / ___ \   |  _  /   | |_| |  |  __| 
+|____/   /_/   \_\  |_|  \_\   \____|  |_____|
     ____________________________________________________________
-     Hello! I'm Bott.
-     What can I do for you?
-    ____________________________________________________________
-
-    ____________________________________________________________
-     OOPS!!! A fixed-duration task needs a description. Try: duration <description> /for <2h30m>
+     Ten-hut! Sergeant Bott reporting for duty.
+     What's your first order, recruit?
     ____________________________________________________________
 
     ____________________________________________________________
-     OOPS!!! A fixed-duration task needs a "/for" duration. Try: duration <description> /for <2h30m>
+     NEGATIVE, RECRUIT! A fixed-duration task needs a description. Try: duration <description> /for <2h30m>
     ____________________________________________________________
 
     ____________________________________________________________
-     OOPS!!! The "for" duration of a fixed-duration task cannot be empty. Try: duration <description> /for <2h30m>
+     NEGATIVE, RECRUIT! A fixed-duration task needs a "/for" duration. Try: duration <description> /for <2h30m>
     ____________________________________________________________
 
     ____________________________________________________________
-     OOPS!!! "2" is not a valid duration. Use a number with a unit, e.g. 2h, 30m, or 1h30m.
+     NEGATIVE, RECRUIT! The "for" duration of a fixed-duration task cannot be empty. Try: duration <description> /for <2h30m>
     ____________________________________________________________
 
     ____________________________________________________________
-     OOPS!!! In a combined duration like 1h30m, the minutes must be 0-59. Try: duration <description> /for <2h30m>
+     NEGATIVE, RECRUIT! "2" is not a valid duration. Use a number with a unit, e.g. 2h, 30m, or 1h30m.
     ____________________________________________________________
 
     ____________________________________________________________
-     Got it. I've added this task:
+     NEGATIVE, RECRUIT! In a combined duration like 1h30m, the minutes must be 0-59. Try: duration <description> /for <2h30m>
+    ____________________________________________________________
+
+    ____________________________________________________________
+     Mission logged, recruit! Fall in:
        [F][ ] read report (for: 2h)
-     Now you have 1 tasks in the list.
+     You now have 1 mission(s) on the roster.
     ____________________________________________________________
 
     ____________________________________________________________
-     Here are the tasks in your list:
+     Roll call! Here's your mission roster:
      1.[F][ ] read report (for: 2h)
     ____________________________________________________________
 
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Dismissed! Fall out, recruit.
     ____________________________________________________________
 
 ```

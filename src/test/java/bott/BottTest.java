@@ -29,9 +29,9 @@ public class BottTest {
     public void getResponse_todoCommand_addsTaskAndConfirms() {
         String response = newBott().getResponse("todo read book");
         assertEquals(
-                "Got it. I've added this task:\n"
+                "Mission logged, recruit! Fall in:\n"
                         + "  [T][ ] read book\n"
-                        + "Now you have 1 tasks in the list.",
+                        + "You now have 1 mission(s) on the roster.",
                 response);
     }
 
@@ -44,7 +44,7 @@ public class BottTest {
         String response = bott.getResponse("list");
 
         assertEquals(
-                "Here are the tasks in your list:\n"
+                "Roll call! Here's your mission roster:\n"
                         + "1.[T][ ] read book\n"
                         + "2.[T][ ] return book",
                 response);
@@ -54,35 +54,36 @@ public class BottTest {
     public void getResponse_durationCommand_addsFixedDurationTask() {
         String response = newBott().getResponse("duration read sales report /for 1h30m");
         assertEquals(
-                "Got it. I've added this task:\n"
+                "Mission logged, recruit! Fall in:\n"
                         + "  [F][ ] read sales report (for: 1h 30m)\n"
-                        + "Now you have 1 tasks in the list.",
+                        + "You now have 1 mission(s) on the roster.",
                 response);
     }
 
     @Test
     public void getResponse_durationWithInvalidTime_returnsErrorMessage() {
         assertEquals(
-                "OOPS!!! \"2\" is not a valid duration. Use a number with a unit, e.g. 2h, 30m, or 1h30m.",
+                "NEGATIVE, RECRUIT! \"2\" is not a valid duration. Use a number with a unit, e.g. 2h, 30m,"
+                        + " or 1h30m.",
                 newBott().getResponse("duration read sales report /for 2"));
     }
 
     @Test
     public void getResponse_unknownCommand_returnsErrorMessage() {
         String response = newBott().getResponse("blah");
-        assertTrue(response.startsWith("OOPS!!! I don't recognize \"blah\" as a command."));
+        assertTrue(response.startsWith("NEGATIVE, RECRUIT! That's not an order I recognize: \"blah\"."));
     }
 
     @Test
     public void getResponse_missingTaskNumber_returnsErrorMessage() {
         assertEquals(
-                "OOPS!!! Please specify a task number. Try: mark <task number>",
+                "NEGATIVE, RECRUIT! Please specify a task number. Try: mark <task number>",
                 newBott().getResponse("mark"));
     }
 
     @Test
     public void getResponse_byeCommand_returnsGoodbyeMessage() {
-        assertEquals("Bye. Hope to see you again soon!", newBott().getResponse("bye"));
+        assertEquals("Dismissed! Fall out, recruit.", newBott().getResponse("bye"));
     }
 
     @Test
