@@ -29,7 +29,7 @@ public class Main extends Application {
         MainWindow mainWindow = new MainWindow(bott);
 
         stage.setScene(new Scene(mainWindow, INITIAL_WIDTH, INITIAL_HEIGHT));
-        stage.setTitle("Bott");
+        stage.setTitle("Sergeant Bott");
         stage.setMinWidth(MIN_WIDTH);
         stage.setMinHeight(MIN_HEIGHT);
         stage.show();

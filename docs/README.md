@@ -1,20 +1,19 @@
-# Bott User Guide
+# Sergeant Bott User Guide
 
-Bott is a text-based chatbot that helps you keep track of your tasks — todos, deadlines, and
-events — directly from the command line. Type a command, press Enter, and Bott tells you what it
-did.
+Sergeant Bott is a text-based chatbot that helps you keep track of your tasks — todos, deadlines,
+events, and fixed-duration tasks — directly from the command line, run with the discipline of a
+drill sergeant running roll call. Type a command, press Enter, and Sarge tells you what it did.
 
 ```
     ____________________________________________________________
- ____     ___     _____   _____ 
-|  _ \   / _ \   |_   _| |_   _|
-| |_) | | | | |    | |     | |  
-|  _ <  | | | |    | |     | |  
-| |_) | | |_| |    | |     | |  
-|____/   \___/     |_|     |_|  
+ ____        _       _____      ____    _____ 
+/ ___|      / \     |  __ \    / ___|  |  ___|
+\___ \     / _ \    | |__) |  | |  _   | |__  
+ ___) |   / ___ \   |  _  /   | |_| |  |  __| 
+|____/   /_/   \_\  |_|  \_\   \____|  |_____|
     ____________________________________________________________
-     Hello! I'm Bott.
-     What can I do for you?
+     Ten-hut! Sergeant Bott reporting for duty.
+     What's your first order, recruit?
     ____________________________________________________________
 ```
 
@@ -22,16 +21,15 @@ did.
 
 1. Make sure you have Java 25 installed.
 2. Run `Bott.java` (see the main [README](../README.md) for how to open the project in an IDE).
-3. Type a command into the console and press Enter. Bott's response appears between two
+3. Type a command into the console and press Enter. Sarge's response appears between two
    horizontal lines.
-4. Type `bye` when you're done, and Bott will say goodbye and the program will exit.
+4. Type `bye` when you're done, and Sarge will dismiss you and the program will exit.
 
-Bott also has a graphical interface: run `./gradlew run` to open a chat window where you type the
-same commands into a text box and Bott's replies appear as chat bubbles. The commands below are
-identical in both interfaces (the console examples just show the extra divider lines).
+Sergeant Bott also has a graphical interface: run `./gradlew run` to open a chat window where you
+type the same commands into a text box and Sarge's replies appear as chat bubbles. The commands
+below are identical in both interfaces (the console examples just show the extra divider lines).
 
-Tasks only exist for the current session — closing Bott clears them. There is currently no support
-for saving tasks to disk between sessions.
+Tasks are saved to `data/bott.txt` and reloaded the next time you start Sergeant Bott.
 
 ## Adding a todo: `todo`
 
@@ -46,9 +44,9 @@ todo borrow book
 Expected output:
 ```
     ____________________________________________________________
-     Got it. I've added this task:
+     Mission logged, recruit! Fall in:
        [T][ ] borrow book
-     Now you have 1 tasks in the list.
+     You now have 1 mission(s) on the roster.
     ____________________________________________________________
 ```
 
@@ -66,9 +64,9 @@ deadline return book /by Sunday
 Expected output:
 ```
     ____________________________________________________________
-     Got it. I've added this task:
+     Mission logged, recruit! Fall in:
        [D][ ] return book (by: Sunday)
-     Now you have 1 tasks in the list.
+     You now have 1 mission(s) on the roster.
     ____________________________________________________________
 ```
 
@@ -85,9 +83,9 @@ event project meeting /from Mon 2pm /to 4pm
 Expected output:
 ```
     ____________________________________________________________
-     Got it. I've added this task:
+     Mission logged, recruit! Fall in:
        [E][ ] project meeting (from: Mon 2pm to: 4pm)
-     Now you have 1 tasks in the list.
+     You now have 1 mission(s) on the roster.
     ____________________________________________________________
 ```
 
@@ -108,9 +106,9 @@ duration read sales report /for 2h
 Expected output:
 ```
     ____________________________________________________________
-     Got it. I've added this task:
+     Mission logged, recruit! Fall in:
        [F][ ] read sales report (for: 2h)
-     Now you have 1 tasks in the list.
+     You now have 1 mission(s) on the roster.
     ____________________________________________________________
 ```
 
@@ -124,7 +122,7 @@ Example: `list`
 Expected output (after adding the todo, deadline, and event above):
 ```
     ____________________________________________________________
-     Here are the tasks in your list:
+     Roll call! Here's your mission roster:
      1.[T][ ] read book
      2.[D][ ] return book (by: Sunday)
      3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
@@ -145,7 +143,7 @@ find book
 Expected output (given a list containing "read book" and "return book (by: June 6th)", among others):
 ```
     ____________________________________________________________
-     Here are the matching tasks in your list:
+     Found these missions matching your intel:
      1.[T][X] read book
      2.[D][X] return book (by: June 6th)
     ____________________________________________________________
@@ -164,7 +162,7 @@ mark 1
 Expected output:
 ```
     ____________________________________________________________
-     Nice! I've marked this task as done:
+     Outstanding! Mission accomplished:
        [T][X] read book
     ____________________________________________________________
 ```
@@ -182,7 +180,7 @@ unmark 1
 Expected output:
 ```
     ____________________________________________________________
-     OK, I've marked this task as not done yet:
+     At ease. Mission's back on the roster:
        [T][ ] read book
     ____________________________________________________________
 ```
@@ -200,9 +198,9 @@ delete 1
 Expected output:
 ```
     ____________________________________________________________
-     Noted. I've removed this task:
+     Mission scrubbed, recruit! Fall out:
        [T][ ] read book
-     Now you have 0 tasks in the list.
+     You now have 0 mission(s) on the roster.
     ____________________________________________________________
 ```
 
@@ -215,13 +213,13 @@ Example: `bye`
 Expected output:
 ```
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Dismissed! Fall out, recruit.
     ____________________________________________________________
 ```
 
 ## Error handling
 
-If a command is missing information it needs, or Bott doesn't recognize it at all, Bott tells you
+If a command is missing information it needs, or Sarge doesn't recognize it at all, Sarge tells you
 specifically what's wrong (and, where possible, how to fix it) instead of crashing.
 
 Example: `todo` with no description
@@ -232,7 +230,7 @@ todo
 Expected output:
 ```
     ____________________________________________________________
-     OOPS!!! A todo needs a description. Try: todo <description>
+     NEGATIVE, RECRUIT! A todo needs a description. Try: todo <description>
     ____________________________________________________________
 ```
 
@@ -244,7 +242,7 @@ blah
 Expected output:
 ```
     ____________________________________________________________
-     OOPS!!! I don't recognize "blah" as a command. Try: list, todo, deadline, event, duration, find, mark, unmark, delete, or bye.
+     NEGATIVE, RECRUIT! That's not an order I recognize: "blah". Try: list, todo, deadline, event, duration, find, mark, unmark, delete, or bye.
     ____________________________________________________________
 ```
 

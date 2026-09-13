@@ -128,9 +128,9 @@ public class Bott {
                 return addTask(Parser.parseFixedDuration(args));
             default:
                 throw new BottException(
-                    "I don't recognize \"" +
+                    "That's not an order I recognize: \"" +
                         command +
-                        "\" as a command. Try: list, todo, deadline, event, duration, find, mark, unmark," +
+                        "\". Try: list, todo, deadline, event, duration, find, mark, unmark," +
                         " delete, or bye."
                 );
         }
