@@ -52,39 +52,40 @@ Expected output:
 
 ## Adding a deadline: `deadline`
 
-Adds a task that needs to be done before a specific date/time. Bott stores the date/time exactly
-as you type it — it doesn't need to be in any particular format.
+Adds a task that needs to be done by a specific date. The date must be given as `yyyy-MM-dd`
+(e.g. `2019-10-15`); Sarge displays it back as `MMM dd yyyy` (e.g. `Oct 15 2019`).
 
-Example: `deadline <description> /by <date/time>`
+Example: `deadline <description> /by <yyyy-MM-dd>`
 
 ```
-deadline return book /by Sunday
+deadline return book /by 2019-10-15
 ```
 
 Expected output:
 ```
     ____________________________________________________________
      Mission logged, recruit! Fall in:
-       [D][ ] return book (by: Sunday)
+       [D][ ] return book (by: Oct 15 2019)
      You now have 1 mission(s) on the roster.
     ____________________________________________________________
 ```
 
 ## Adding an event: `event`
 
-Adds a task that starts at a specific date/time and ends at a specific date/time.
+Adds a task that starts and ends on specific dates. Like `deadline`, both dates must be given as
+`yyyy-MM-dd`.
 
-Example: `event <description> /from <start> /to <end>`
+Example: `event <description> /from <yyyy-MM-dd> /to <yyyy-MM-dd>`
 
 ```
-event project meeting /from Mon 2pm /to 4pm
+event project meeting /from 2019-08-06 /to 2019-08-07
 ```
 
 Expected output:
 ```
     ____________________________________________________________
      Mission logged, recruit! Fall in:
-       [E][ ] project meeting (from: Mon 2pm to: 4pm)
+       [E][ ] project meeting (from: Aug 06 2019 to: Aug 07 2019)
      You now have 1 mission(s) on the roster.
     ____________________________________________________________
 ```
@@ -115,17 +116,18 @@ Expected output:
 ## Listing all tasks: `list`
 
 Shows every task currently stored, numbered in the order they were added, along with its type icon
-(`[T]`/`[D]`/`[E]`) and status icon (`[X]` for done, `[ ]` for not done).
+(`[T]`/`[D]`/`[E]`/`[F]`) and status icon (`[X]` for done, `[ ]` for not done).
 
 Example: `list`
 
-Expected output (after adding the todo, deadline, and event above):
+Expected output (after adding the todo, deadline, event, and fixed-duration task above):
 ```
     ____________________________________________________________
      Roll call! Here's your mission roster:
-     1.[T][ ] read book
-     2.[D][ ] return book (by: Sunday)
-     3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+     1.[T][ ] borrow book
+     2.[D][ ] return book (by: Oct 15 2019)
+     3.[E][ ] project meeting (from: Aug 06 2019 to: Aug 07 2019)
+     4.[F][ ] read sales report (for: 2h)
     ____________________________________________________________
 ```
 
@@ -140,12 +142,12 @@ Example: `find <keyword>`
 find book
 ```
 
-Expected output (given a list containing "read book" and "return book (by: June 6th)", among others):
+Expected output (given a list containing "read book" and "return book /by 2019-06-06", among others):
 ```
     ____________________________________________________________
      Found these missions matching your intel:
      1.[T][X] read book
-     2.[D][X] return book (by: June 6th)
+     2.[D][X] return book (by: Jun 06 2019)
     ____________________________________________________________
 ```
 
@@ -255,8 +257,8 @@ non-numeric, or out-of-range task number, `deadline`/`event` reject a missing `/
 | Action | Format | Example |
 |---|---|---|
 | Add a todo | `todo <description>` | `todo borrow book` |
-| Add a deadline | `deadline <description> /by <date/time>` | `deadline return book /by Sunday` |
-| Add an event | `event <description> /from <start> /to <end>` | `event project meeting /from Mon 2pm /to 4pm` |
+| Add a deadline | `deadline <description> /by <yyyy-MM-dd>` | `deadline return book /by 2019-10-15` |
+| Add an event | `event <description> /from <yyyy-MM-dd> /to <yyyy-MM-dd>` | `event project meeting /from 2019-08-06 /to 2019-08-07` |
 | Add a fixed-duration task | `duration <description> /for <amount>` | `duration read sales report /for 2h` |
 | List all tasks | `list` | `list` |
 | Find tasks by keyword | `find <keyword>` | `find book` |
