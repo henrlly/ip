@@ -10,11 +10,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
- * Tests {@link Bott#getResponse(String)}, the entry point used by the GUI.
- * The command handling it delegates to (Parser, TaskList, Storage) is
- * covered by those classes' own tests; these cases check that a response
- * string comes back for the happy path, the error path, and "bye", and
- * that state carries across calls on the same instance.
+ * Tests {@link Bott#getResponse(String)}, the entry point used by the GUI. The command handling
+ * it delegates to (Parser's own parsing/validation, TaskList's own indexing, Storage's own
+ * file format) is covered by those classes' tests; these cases instead check the wiring in
+ * {@code executeCommand} and its helpers - that each command word reaches the right task-list
+ * operation, that the resulting acknowledgement is built from the right pieces, and that changes
+ * are actually persisted (and reloaded) via {@link bott.storage.Storage}.
  */
 public class BottTest {
 
@@ -51,6 +52,26 @@ public class BottTest {
     }
 
     @Test
+    public void getResponse_deadlineCommand_addsDeadlineTask() {
+        String response = newBott().getResponse("deadline return book /by 2019-10-15");
+        assertEquals(
+                "Mission logged, recruit! Fall in:\n"
+                        + "  [D][ ] return book (by: Oct 15 2019)\n"
+                        + "You now have 1 mission(s) on the roster.",
+                response);
+    }
+
+    @Test
+    public void getResponse_eventCommand_addsEventTask() {
+        String response = newBott().getResponse("event project meeting /from 2019-08-06 /to 2019-08-07");
+        assertEquals(
+                "Mission logged, recruit! Fall in:\n"
+                        + "  [E][ ] project meeting (from: Aug 06 2019 to: Aug 07 2019)\n"
+                        + "You now have 1 mission(s) on the roster.",
+                response);
+    }
+
+    @Test
     public void getResponse_durationCommand_addsFixedDurationTask() {
         String response = newBott().getResponse("duration read sales report /for 1h30m");
         assertEquals(
@@ -82,8 +103,87 @@ public class BottTest {
     }
 
     @Test
+    public void getResponse_markCommand_marksTaskAndConfirms() {
+        Bott bott = newBott();
+        bott.getResponse("todo read book");
+
+        String response = bott.getResponse("mark 1");
+
+        assertEquals("Outstanding! Mission accomplished:\n  [T][X] read book", response);
+    }
+
+    @Test
+    public void getResponse_unmarkCommand_unmarksTaskAndConfirms() {
+        Bott bott = newBott();
+        bott.getResponse("todo read book");
+        bott.getResponse("mark 1");
+
+        String response = bott.getResponse("unmark 1");
+
+        assertEquals("At ease. Mission's back on the roster:\n  [T][ ] read book", response);
+    }
+
+    @Test
+    public void getResponse_deleteCommand_removesTaskAndShiftsRest() {
+        Bott bott = newBott();
+        bott.getResponse("todo read book");
+        bott.getResponse("todo return book");
+
+        String deleteResponse = bott.getResponse("delete 1");
+        String listResponse = bott.getResponse("list");
+
+        assertEquals(
+                "Mission scrubbed, recruit! Fall out:\n"
+                        + "  [T][ ] read book\n"
+                        + "You now have 1 mission(s) on the roster.",
+                deleteResponse);
+        assertEquals("Roll call! Here's your mission roster:\n1.[T][ ] return book", listResponse);
+    }
+
+    @Test
+    public void getResponse_findCommand_returnsOnlyMatchingTasks() {
+        Bott bott = newBott();
+        bott.getResponse("todo read book");
+        bott.getResponse("todo join sports club");
+
+        String response = bott.getResponse("find book");
+
+        assertEquals("Found these missions matching your intel:\n1.[T][ ] read book", response);
+    }
+
+    @Test
+    public void getResponse_findCommand_noMatches_showsHeaderOnly() {
+        Bott bott = newBott();
+        bott.getResponse("todo read book");
+
+        String response = bott.getResponse("find zzz");
+
+        assertEquals("Found these missions matching your intel:", response);
+    }
+
+    @Test
+    public void getResponse_afterRestart_tasksPersistAcrossInstances() {
+        Path filePath = tempDir.resolve("bott.txt");
+        Bott firstRun = new Bott(filePath.toString());
+        firstRun.getResponse("todo read book");
+        firstRun.getResponse("mark 1");
+
+        Bott secondRun = new Bott(filePath.toString());
+        String response = secondRun.getResponse("list");
+
+        assertEquals("Roll call! Here's your mission roster:\n1.[T][X] read book", response);
+    }
+
+    @Test
     public void getResponse_byeCommand_returnsGoodbyeMessage() {
         assertEquals("Dismissed! Fall out, recruit.", newBott().getResponse("bye"));
+    }
+
+    @Test
+    public void getGreeting_returnsWelcomeMessage() {
+        assertEquals(
+                "Ten-hut! Sergeant Bott reporting for duty.\nWhat's your first order, recruit?",
+                newBott().getGreeting());
     }
 
     @Test
